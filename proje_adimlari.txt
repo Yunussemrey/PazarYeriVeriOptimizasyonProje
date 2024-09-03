@@ -1,0 +1,5 @@
+Merhaba arkadaşlar ben Yunus.
+Lütfen github'a dosya yükleyen güncelleyen ve çıkaran arkadaşlar daha derli toplu ve sistemli çalışabilmemiz için
+yaptığı işlemleri buraya küçük küçük notlar halinde yazarsa süper olur.
+İyi çalışmalar.. 
+1- Githup repo oluşturdum ve "projeAdımları.txt" dosyasını oluşturdum.(Yunus)
