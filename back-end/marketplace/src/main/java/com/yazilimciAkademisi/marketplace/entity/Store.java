@@ -33,7 +33,7 @@ public class Store {
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private AppUser appUser;
 
     @PrePersist
     protected void onCreate() {
@@ -49,13 +49,13 @@ public class Store {
     public Store() {
     }
 
-    public Store(Integer id, String storeName, String description, String contactInfo, String address, User user) {
+    public Store(Integer id, String storeName, String description, String contactInfo, String address, AppUser appUser) {
         this.id = id;
         this.storeName = storeName;
         this.description = description;
         this.contactInfo = contactInfo;
         this.address = address;
-        this.user = user;
+        this.appUser = appUser;
     }
 
     public Integer getId() {
@@ -122,11 +122,11 @@ public class Store {
         this.products = products;
     }
 
-    public User getUser() {
-        return user;
+    public AppUser getUser() {
+        return appUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 }

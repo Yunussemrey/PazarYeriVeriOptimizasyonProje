@@ -2,7 +2,7 @@ package com.yazilimciAkademisi.marketplace.dto.mapper;
 
 import com.yazilimciAkademisi.marketplace.dto.request.UserRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.UserResponseDTO;
-import com.yazilimciAkademisi.marketplace.entity.User;
+import com.yazilimciAkademisi.marketplace.entity.AppUser;
 import com.yazilimciAkademisi.marketplace.entity.enums.Role;
 import org.springframework.stereotype.Component;
 
@@ -19,30 +19,30 @@ public class UserMapper {
     }
 
 
-    public User toEntity(UserRequestDTO dto) {
-        User user = new User();
-        user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
-        user.setEmail(dto.getEmail());
-        user.setRole(Role.USER);
-        return user;
+    public AppUser toEntity(UserRequestDTO dto) {
+        AppUser appUser = new AppUser();
+        appUser.setUsername(dto.getUsername());
+        appUser.setPassword(dto.getPassword());
+        appUser.setEmail(dto.getEmail());
+        appUser.setRole(Role.STOREUSER);
+        return appUser;
     }
 
-    public UserResponseDTO toResponseDTO(User user) {
+    public UserResponseDTO toResponseDTO(AppUser appUser) {
         UserResponseDTO dto = new UserResponseDTO();
-        dto.setId(user.getId());
-        dto.setUsername(user.getUsername());
-        dto.setPassword(user.getPassword());
-        dto.setEmail(user.getEmail());
-        dto.setRole(user.getRole());
+        dto.setId(appUser.getId());
+        dto.setUsername(appUser.getUsername());
+        dto.setPassword(appUser.getPassword());
+        dto.setEmail(appUser.getEmail());
+        dto.setRole(appUser.getRole());
         if (dto.getStore() != null) {
-            dto.setStore(storeMapper.toResponseDTO(user.getStore()));
+            dto.setStore(storeMapper.toResponseDTO(appUser.getStore()));
         }
         return dto;
     }
 
-    public List<UserResponseDTO> toUserResponseDTOList(List<User> userList) {
-        return userList.stream()
+    public List<UserResponseDTO> toUserResponseDTOList(List<AppUser> appUserList) {
+        return appUserList.stream()
                 .map(this::toResponseDTO)
                 .collect(Collectors.toList());
     }

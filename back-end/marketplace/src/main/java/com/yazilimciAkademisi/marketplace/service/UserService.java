@@ -3,7 +3,7 @@ package com.yazilimciAkademisi.marketplace.service;
 import com.yazilimciAkademisi.marketplace.dto.mapper.UserMapper;
 import com.yazilimciAkademisi.marketplace.dto.request.UserRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.UserResponseDTO;
-import com.yazilimciAkademisi.marketplace.entity.User;
+import com.yazilimciAkademisi.marketplace.entity.AppUser;
 import com.yazilimciAkademisi.marketplace.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,25 +28,25 @@ public class UserService {
     }
 
     public Optional<UserResponseDTO> getUserResponseDTOById(Integer id) {
-        Optional<User> userOptional = userRepository.findById(id);
+        Optional<AppUser> userOptional = userRepository.findById(id);
         return userOptional.map(userMapper::toResponseDTO);
     }
 
     public UserResponseDTO saveUser(UserRequestDTO userRequestDTO) {
-        User newUser = userMapper.toEntity(userRequestDTO);
-        User savedUser = userRepository.save(newUser);
-        return userMapper.toResponseDTO(savedUser);
+        AppUser newAppUser = userMapper.toEntity(userRequestDTO);
+        AppUser savedAppUser = userRepository.save(newAppUser);
+        return userMapper.toResponseDTO(savedAppUser);
     }
 
     public UserResponseDTO updateUser(Integer id, UserRequestDTO userRequestDTO) {
-        Optional<User> existingUserOptional = userRepository.findById(id);
+        Optional<AppUser> existingUserOptional = userRepository.findById(id);
         if (existingUserOptional.isPresent()) {
-            User existingUser = existingUserOptional.get();
-            existingUser.setUsername(userRequestDTO.getUsername());
-            existingUser.setPassword(userRequestDTO.getPassword());
-            existingUser.setEmail(userRequestDTO.getEmail());
-            User updatedUser = userRepository.save(existingUser);
-            return userMapper.toResponseDTO(updatedUser);
+            AppUser existingAppUser = existingUserOptional.get();
+            existingAppUser.setUsername(userRequestDTO.getUsername());
+            existingAppUser.setPassword(userRequestDTO.getPassword());
+            existingAppUser.setEmail(userRequestDTO.getEmail());
+            AppUser updatedAppUser = userRepository.save(existingAppUser);
+            return userMapper.toResponseDTO(updatedAppUser);
         } else {
             throw new IllegalArgumentException("Store with ID " + id + " does not exist.");
         }
