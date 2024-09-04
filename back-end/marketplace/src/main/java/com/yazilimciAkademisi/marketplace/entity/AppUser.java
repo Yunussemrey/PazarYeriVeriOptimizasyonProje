@@ -3,7 +3,8 @@ package com.yazilimciAkademisi.marketplace.entity;
 import com.yazilimciAkademisi.marketplace.entity.enums.Role;
 import jakarta.persistence.*;
 
-public class User {
+@Entity
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +22,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL)
     private Store store;
 
-    public User() {
+    public AppUser() {
     }
 
-    public User(Integer id, String username, String password, String email, Role role, Store store) {
+    public AppUser(Integer id, String username, String password, String email, Role role, Store store) {
         this.id = id;
         this.username = username;
         this.password = password;
