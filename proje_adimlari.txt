@@ -5,3 +5,4 @@ yaptığı işlemleri buraya küçük küçük notlar halinde yazarsa süper olu
 1- Githup repo oluşturdum ve "projeAdımları.txt" dosyasını oluşturdum.(Yunus)
 2- Front-end site kodlarını güncelledim ve pazar yeri sql komutlarını github repo da paylaştım.(Şeyma)
 3- Back-End kodlarını paylaştım.(Eren)
+4- Tasarımları html klasörüne yükledim.(Emine)
