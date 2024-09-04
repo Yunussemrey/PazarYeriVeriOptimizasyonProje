@@ -50,6 +50,13 @@ public class BrandService {
         return brandMapper.toResponseDTO(savedBrand);
     }
 
+    public BrandResponseDTO updateBrand(Integer id, BrandRequestDTO brandRequestDTO) {
+        Brand existingBrand = this.getBrandById(id).get();
+        existingBrand.setName(brandRequestDTO.getName());
+        brandRepository.save(existingBrand);
+        return brandMapper.toResponseDTO(existingBrand);
+    }
+
     public void deleteBrand(Integer id) {
         if (!brandRepository.existsById(id)) {
             throw new IllegalArgumentException("Brand with ID " + id + " does not exist.");

@@ -15,6 +15,7 @@ public class StoreMapper {
         Store store = new Store();
         store.setStoreName(dto.getStoreName());
         store.setDescription(dto.getDescription());
+        store.setContactInfo(dto.getContactInfo());
         store.setAddress(dto.getAddress());
         return store;
     }

@@ -45,7 +45,7 @@ public class BrandController {
     @PutMapping("/{id}")
     public ResponseEntity<BrandResponseDTO> updateBrand(@PathVariable Integer id, @RequestBody BrandRequestDTO brandRequestDTO) {
         if (brandService.getBrandById(id).isPresent()) {
-            BrandResponseDTO updatedBrandDTO = brandService.saveBrand(brandRequestDTO);
+            BrandResponseDTO updatedBrandDTO = brandService.updateBrand(id, brandRequestDTO);
             return ResponseEntity.ok(updatedBrandDTO);
         } else {
             return ResponseEntity.notFound().build();

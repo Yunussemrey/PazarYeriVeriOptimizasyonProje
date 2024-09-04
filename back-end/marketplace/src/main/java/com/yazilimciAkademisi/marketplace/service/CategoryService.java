@@ -47,8 +47,8 @@ public class CategoryService {
 
     public CategoryResponseDTO saveCategory(CategoryRequestDTO categoryRequestDTO) {
         Category category = categoryMapper.toEntity(categoryRequestDTO);
-        Category updatedCategory = updateParentCategory(category, categoryRequestDTO.getParentCategoryId());
-        Category savedCategory = categoryRepository.save(updatedCategory);
+        updateParentCategory(category, categoryRequestDTO.getParentCategoryId());
+        Category savedCategory = categoryRepository.save(category);
         return categoryMapper.toResponseDTO(savedCategory);
     }
 
@@ -60,9 +60,9 @@ public class CategoryService {
             // Update the existing category properties
             existingCategory.setName(categoryRequestDTO.getName());
             // Update parent category
-            Category updatedCategory = updateParentCategory(existingCategory, categoryRequestDTO.getParentCategoryId());
-            categoryRepository.save(updatedCategory);
-            return categoryMapper.toResponseDTO(updatedCategory);
+            updateParentCategory(existingCategory, categoryRequestDTO.getParentCategoryId());
+            categoryRepository.save(existingCategory);
+            return categoryMapper.toResponseDTO(existingCategory);
         } else {
             throw new IllegalArgumentException("Category with ID " + id + " does not exist.");
         }
@@ -76,7 +76,7 @@ public class CategoryService {
     }
 
     // Update Parent Category
-    private Category updateParentCategory(Category category,Integer newParentCategoryId) {
+    private void updateParentCategory(Category category, Integer newParentCategoryId) {
         // Category cannot be its own parent
         if (newParentCategoryId != null && newParentCategoryId.equals(category.getId())) {
             throw new IllegalArgumentException("A category cannot be its own parent.");
@@ -85,7 +85,6 @@ public class CategoryService {
         if (category.getParentCategory() != null) {
             Category oldParentCategory = category.getParentCategory();
             oldParentCategory.getSubCategories().remove(category);
-            categoryRepository.save(oldParentCategory);
         }
         // Update new parent category
         if (newParentCategoryId != null) {
@@ -94,14 +93,12 @@ public class CategoryService {
                 Category newParentCategory = newParentCategoryOptional.get();
                 category.setParentCategory(newParentCategory);
                 newParentCategory.getSubCategories().add(category);
-                categoryRepository.save(newParentCategory);
             } else {
                 category.setParentCategory(null);
             }
         } else {
             category.setParentCategory(null);
         }
-        return category;
     }
 
 }
