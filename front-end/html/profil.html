@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profil</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style id="theme-style">
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #343a40;
+            color: #f8f9fa;
+            margin: 0;
+        }
+
+        .dark-theme {
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px 0;
+            border-bottom: 2px solid #f1c40f;
+        }
+
+        .navbar .navbar-brand img {
+            max-width: 120px;
+            height: auto;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: #fff !important;
+            margin-right: 20px;
+            font-weight: 500;
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            color: #f1c40f !important;
+        }
+
+        .profile-header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #000000;
+            color: #fff;
+            margin-bottom: 30px;
+        }
+
+        .profile-header.dark-theme {
+            background-color: #212222;
+        }
+
+        .profile-content {
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 0;
+            box-shadow: none;
+            border: 1px solid #f2ff00;
+            font-size: 16px;
+            padding: 10px 15px;
+        }
+
+        .btn-update {
+            background-color: #5d0512;
+            color: #fff;
+            border-radius: 0;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn-update.dark-theme {
+            background-color: #180466;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f1c40f;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 1000;
+        }
+        
+        .theme-toggle.dark-theme {
+            background-color: #f1c40f;
+            color: #000;
+        }
+
+        .theme-toggle.light-theme {
+            background-color: #4c4c4b;
+            color: #f9f9f9;
+        }
+
+        .avatar-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .avatar-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #f1c40f;
+        }
+    </style>
+</head>
+
+<body class="dark-theme">
+
+    <!-- Avatar Image -->
+    <div class="avatar-container">
+        <img src="https://via.placeholder.com/100" alt="Avatar">
+    </div>
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logoyazi.png" alt="Logo" width="250">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="fas fa-bars" style="color:#fff; font-size:28px;"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="profil.html">Mağaza</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ürünler.html">Ürünler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pazaryeri.html">Pazar Yeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="siparis.html">Siparişler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="satis.html">Satış Yönetimi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="ayarlar.html">Ayarlar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <h1>Hoşgeldiniz, Kullanıcı Adı!</h1>
+        <p>Burada bilgilerinizi görüntüleyebilir ve güncelleyebilirsiniz.</p>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="container profile-content">
+        <h2>Mağaza Bilgileri</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">Mağaza Sahibi Adı:</label>
+                <!-- Kullanıcının kaydettiği ad -->
+                <input type="text" class="form-control" id="name" value="Mevcut Adınız">
+            </div>
+            <div class="form-group">
+                <label for="email">E-posta Adresiniz:</label>
+                <!-- Kullanıcının kaydettiği e-posta -->
+                <input type="email" class="form-control" id="email" value="mevcut.email@adresiniz.com">
+            </div>
+            <div class="form-group">
+                <label for="phone">Telefon Numaranız:</label>
+                <!-- Kullanıcının kaydettiği telefon numarası -->
+                <input type="tel" class="form-control" id="phone" value="0555 555 5555">
+                <div class="form-group">
+                    <label for="storeName">Mağaza Adı:</label>
+                    <!-- Kullanıcının kaydettiği mağaza adı -->
+                    <input type="text" class="form-control" id="storeName" value="Mevcut Mağaza Adınız">
+                </div>
+                <div class="form-group">
+                    <label for="storeDesc">Mağaza Açıklaması:</label>
+                    <!-- Kullanıcının kaydettiği mağaza açıklaması -->
+                    <textarea class="form-control" id="storeDesc" rows="3" placeholder="Mevcut Mağaza Açıklamanız">Mağaza açıklamanız burada görünecek.</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="storeAddress">Mağaza Adresi:</label>
+                    <!-- Kullanıcının kaydettiği mağaza adresi -->
+                    <input type="text" class="form-control" id="storeAddress" value="Mevcut Mağaza Adresiniz">
+            </div>
+            <button type="submit" class="btn btn-update">Bilgileri Güncelle</button>
+        </form>
+
+    <!-- Theme Toggle Button -->
+    <button class="btn theme-toggle" id="theme-toggle">Gece/Gündüz Modu</button>
+
+    <!-- Footer Start -->
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 Tüm Hakları Saklıdır. Pazar Yeri</p>
+        </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeStyle = document.getElementById('theme-style');
+        const profileHeader = document.querySelector('.profile-header');
+        const btnUpdate = document.querySelectorAll('.btn-update');
+
+        // Automatically apply dark theme on page load
+        document.body.classList.add('dark-theme');
+        profileHeader.classList.add('dark-theme');
+        btnUpdate.forEach(btn => btn.classList.add('dark-theme'));
+
+        themeToggleBtn.addEventListener('click', function () {
+            const isDark = document.body.classList.toggle('dark-theme');
+            profileHeader.classList.toggle('dark-theme');
+            btnUpdate.forEach(btn => btn.classList.toggle('dark-theme'));
+            themeToggleBtn.classList.toggle('light-theme', !isDark);
+        });
+    </script>
+</body>
+
+</html>
+

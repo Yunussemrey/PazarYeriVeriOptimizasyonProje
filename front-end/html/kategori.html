@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategoriler</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            position: relative;
+            min-height: 100vh;
+        }.overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px 0; /* Yüksekliği düşürdü */
+            border-bottom: 2px solid #f1c40f;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /* Üzerinde diğer içerikleri göstermek için */
+        }
+
+        .navbar .navbar-brand img {
+            max-width: 120px; /* Logo boyutunu küçülttü */
+            height: auto;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: #fff !important;
+            margin-right: 20px; /* Margin'i küçültü */
+            font-weight: 500;
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            color: #f1c40f !important;
+        }
+
+        .navbar-expand-lg .container {
+            padding: 0; /* Padding'i sıfırladı */
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+        }
+
+        .navbar-toggler .fa-bars {
+            color: #fff;
+            font-size: 28px;
+        }
+
+        .header_section {
+            background-color: #000000;
+            padding: 60px 0 10px; /* Yüksekliği artırdı ve üst padding'i sıfırladı */
+            margin: 0;
+        }
+
+        .header_section .navbar-nav .nav-link {
+            color: white;
+            font-size: 1.0em;
+            font-weight: 400;
+        }
+
+        .header_section .navbar-nav .nav-link:hover {
+            color: #f8c94e;
+        }
+
+        .categories_section {
+            padding: 60px 0;
+        }
+
+        .categories_taital {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .category_main {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .category_main i {
+            color: #f8c94e;
+            margin-right: 10px;
+        }
+
+        .form-check-label {
+            font-size: 1.1em;
+            color: #6c757d;
+        }
+
+        .form-check-input:checked ~ .form-check-label {
+            color: #343a40;
+        }
+
+        .form-check:hover .form-check-label {
+            color: #343a40;
+            cursor: pointer;
+        }
+
+        .form-check-input:checked ~ .form-check-label::before {
+            content: "\f00c";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: -30px;
+            top: 3px;
+            color: #343a40;
+        }
+
+        .container h3::after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: #f8c94e;
+            margin: 10px 0;
+        }
+
+        .footer_section {
+            background-color: #050505;
+            padding: 30px 0;
+        }
+
+        .footer_section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .footer_section ul li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .footer_section ul li a {
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .footer_section ul li a:hover {
+            color: #f8c94e;
+        }
+
+        .copyright_section {
+            background-color: #000000;
+            padding: 10px 0;
+            text-align: center;
+            color: white;
+            font-size: 1em;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            margin-bottom: 30px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card h5 {
+            font-weight: 600;
+            font-size: 1.25em;
+            margin-bottom: 15px;
+            color: #343a40;
+        }
+
+        .card p {
+            font-size: 1em;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section Start -->
+    <div class="header_section">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logoyazi.png" alt="Pazar Yeri Logo"  width="130">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Anasayfa</a></li>
+                        <li class="nav-item"><a class="nav-link" href="hakkimizda.html">Hakkımızda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="kategori.html">Kategoriler</a></li>
+                        <li class="nav-item"><a class="nav-link" href="giris.html">Giriş Yap</a></li>
+                        <li class="nav-item"><a class="nav-link" href="kayit.html">Kayıt Ol</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Header Section End -->
+
+    <!-- Categories Section Start -->
+    <div class="categories_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="categories_taital">Kategoriler</h1>
+                    <p class="categories_text text-center">Aşağıdaki kategorilerden birini seçerek ürünlerinizi filtreleyebilir ve inceleyebilirsiniz.</p>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Category Column -->
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="category_main"><i class="fas fa-mobile-alt"></i>Elektronik</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="form-check-label">Telefonlar</a></li>
+                                <li><a href="#" class="form-check-label">Laptoplar</a></li>
+                                <li><a href="#" class="form-check-label">Tabletler</a></li>
+                                <li><a href="#" class="form-check-label">Televizyonlar</a></li>
+                                <li><a href="#" class="form-check-label">Kamera ve Aksesuarlar</a></li>
+                                <li><a href="#" class="form-check-label">Ses Sistemleri</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="category_main"><i class="fas fa-tshirt"></i>Moda</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="form-check-label">Kadın Giyim</a></li>
+                                <li><a href="#" class="form-check-label">Erkek Giyim</a></li>
+                                <li><a href="#" class="form-check-label">Ayakkabılar</a></li>
+                                <li><a href="#" class="form-check-label">Aksesuarlar</a></li>
+                                <li><a href="#" class="form-check-label">Çantalar</a></li>
+                                <li><a href="#" class="form-check-label">Saatler</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="category_main"><i class="fas fa-couch"></i>Ev & Yaşam</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="form-check-label">Mobilya</a></li>
+                                <li><a href="#" class="form-check-label">Mutfak Eşyaları</a></li>
+                                <li><a href="#" class="form-check-label">Dekorasyon</a></li>
+                                <li><a href="#" class="form-check-label">Aydınlatma</a></li>
+                                <li><a href="#" class="form-check-label">Banyo Ürünleri</a></li>
+                                <li><a href="#" class="form-check-label">Bahçe & Dış Mekan</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="category_main"><i class="fas fa-child"></i>Anne & Bebek</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="form-check-label">Bebek Arabaları</a></li>
+                                <li><a href="#" class="form-check-label">Mama Sandalyeleri</a></li>
+                                <li><a href="#" class="form-check-label">Bebek Giysileri</a></li>
+                                <li><a href="#" class="form-check-label">Oyuncaklar</a></li>
+                                <li><a href="#" class="form-check-label">Bebek Beslenme</a></li>
+                                <li><a href="#" class="form-check-label">Bebek Bakımı</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Categories Section End -->
+
+    <!-- Footer Section Start -->
+    <div class="footer_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="list-unstyled text-center">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Section End -->
+
+    <!-- Copyright Section Start -->
+    <div class="copyright_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>&copy; 2024 Pazar Yeri. Tüm Hakları Saklıdır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright Section End -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
