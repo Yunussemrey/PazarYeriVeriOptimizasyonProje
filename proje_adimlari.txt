@@ -3,3 +3,4 @@ Lütfen github'a dosya yükleyen güncelleyen ve çıkaran arkadaşlar daha derl
 yaptığı işlemleri buraya küçük küçük notlar halinde yazarsa süper olur.
 İyi çalışmalar.. 
 1- Githup repo oluşturdum ve "projeAdımları.txt" dosyasını oluşturdum.(Yunus)
+2- Front-end site kodlarını güncelledim ve pazar yeri sql komutlarını github repo da paylaştım.(Şeyma)
