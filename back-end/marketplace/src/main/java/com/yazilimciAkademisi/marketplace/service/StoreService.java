@@ -4,12 +4,12 @@ import com.yazilimciAkademisi.marketplace.dto.mapper.StoreMapper;
 import com.yazilimciAkademisi.marketplace.dto.request.StoreRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.StoreResponseDTO;
 import com.yazilimciAkademisi.marketplace.entity.Store;
+import com.yazilimciAkademisi.marketplace.exception.StoreNotFoundException;
 import com.yazilimciAkademisi.marketplace.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StoreService {
@@ -24,12 +24,14 @@ public class StoreService {
     }
 
     public List<StoreResponseDTO> getAllStoreDTOs() {
-        return storeMapper.toStoreResponseDTOList(storeRepository.findAll());
+        List<Store> stores = storeRepository.findAll();
+        return storeMapper.toStoreResponseDTOList(stores);
     }
 
-    public Optional<StoreResponseDTO> getStoreResponseDTOById(Integer id) {
-        Optional<Store> storeOptional = storeRepository.findById(id);
-        return storeOptional.map(storeMapper::toResponseDTO);
+    public StoreResponseDTO getStoreResponseDTOById(Integer id) {
+        Store store = storeRepository.findById(id)
+                .orElseThrow(() -> new StoreNotFoundException("Store with ID " + id + " does not exist."));
+        return storeMapper.toResponseDTO(store);
     }
 
     public StoreResponseDTO saveStore(StoreRequestDTO storeRequestDTO) {
@@ -39,23 +41,19 @@ public class StoreService {
     }
 
     public StoreResponseDTO updateStore(Integer id, StoreRequestDTO storeRequestDTO) {
-        Optional<Store> existingStoreOptional = storeRepository.findById(id);
-        if (existingStoreOptional.isPresent()) {
-            Store existingStore = existingStoreOptional.get();
-            existingStore.setStoreName(storeRequestDTO.getStoreName());
-            existingStore.setDescription(storeRequestDTO.getDescription());
-            existingStore.setContactInfo(storeRequestDTO.getContactInfo());
-            existingStore.setAddress(storeRequestDTO.getAddress());
-            Store updatedStore = storeRepository.save(existingStore);
-            return storeMapper.toResponseDTO(updatedStore);
-        } else {
-            throw new IllegalArgumentException("Store with ID " + id + " does not exist.");
-        }
+        Store existingStore = storeRepository.findById(id)
+                .orElseThrow(() -> new StoreNotFoundException("Store with ID " + id + " does not exist."));
+        existingStore.setStoreName(storeRequestDTO.getStoreName());
+        existingStore.setDescription(storeRequestDTO.getDescription());
+        existingStore.setContactInfo(storeRequestDTO.getContactInfo());
+        existingStore.setAddress(storeRequestDTO.getAddress());
+        Store updatedStore = storeRepository.save(existingStore);
+        return storeMapper.toResponseDTO(updatedStore);
     }
 
     public void deleteStore(Integer id) {
         if (!storeRepository.existsById(id)) {
-            throw new IllegalArgumentException("Store with ID " + id + " does not exist.");
+            throw new StoreNotFoundException("Store with ID " + id + " does not exist.");
         }
         storeRepository.deleteById(id);
     }

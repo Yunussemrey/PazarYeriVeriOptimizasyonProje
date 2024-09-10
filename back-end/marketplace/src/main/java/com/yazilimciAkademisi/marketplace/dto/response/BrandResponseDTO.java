@@ -1,6 +1,7 @@
 package com.yazilimciAkademisi.marketplace.dto.response;
 
 public class BrandResponseDTO {
+
     private Integer id;
     private String name;
 

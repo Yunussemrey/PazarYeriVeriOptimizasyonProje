@@ -2,14 +2,12 @@ package com.yazilimciAkademisi.marketplace.controller;
 
 import com.yazilimciAkademisi.marketplace.dto.request.CategoryRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.CategoryResponseDTO;
-import com.yazilimciAkademisi.marketplace.entity.Category;
 import com.yazilimciAkademisi.marketplace.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -22,29 +20,27 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<CategoryResponseDTO> getAllCategories() {
-        return categoryService.getAllCategoryDTOs();
+    public ResponseEntity<List<CategoryResponseDTO>> getAllCategories() {
+        List<CategoryResponseDTO> categories = categoryService.getAllCategoryDTOs();
+        return ResponseEntity.ok(categories);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable Integer id) {
-        return categoryService.getCategoryResponseDTOById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        CategoryResponseDTO category = categoryService.getCategoryResponseDTOById(id);
+        return ResponseEntity.ok(category);
     }
 
     @PostMapping
-    public CategoryResponseDTO createCategory(@RequestBody CategoryRequestDTO categoryRequestDTO) {
-        return categoryService.saveCategory(categoryRequestDTO);
+    public ResponseEntity<CategoryResponseDTO> createCategory(@RequestBody CategoryRequestDTO categoryRequestDTO) {
+        CategoryResponseDTO createdCategory = categoryService.saveCategory(categoryRequestDTO);
+        return ResponseEntity.status(201).body(createdCategory);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponseDTO> updateCategory(@PathVariable Integer id, @RequestBody CategoryRequestDTO categoryRequestDTO) {
-        try {
-            return ResponseEntity.ok(categoryService.updateCategory(id, categoryRequestDTO));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+        CategoryResponseDTO updatedCategoryDTO = categoryService.updateCategory(id, categoryRequestDTO);
+        return ResponseEntity.ok(updatedCategoryDTO);
     }
 
     @DeleteMapping("/{id}")
