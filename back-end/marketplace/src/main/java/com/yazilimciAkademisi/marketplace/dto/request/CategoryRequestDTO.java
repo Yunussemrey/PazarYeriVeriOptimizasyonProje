@@ -1,6 +1,7 @@
 package com.yazilimciAkademisi.marketplace.dto.request;
 
 public class CategoryRequestDTO {
+
     private String name;
     private Integer parentCategoryId;
 

@@ -4,6 +4,8 @@ import com.yazilimciAkademisi.marketplace.dto.mapper.CategoryMapper;
 import com.yazilimciAkademisi.marketplace.dto.request.CategoryRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.CategoryResponseDTO;
 import com.yazilimciAkademisi.marketplace.entity.Category;
+import com.yazilimciAkademisi.marketplace.exception.CategoryNotFoundException;
+import com.yazilimciAkademisi.marketplace.exception.SelfParentCategoryException;
 import com.yazilimciAkademisi.marketplace.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,21 +26,15 @@ public class CategoryService {
     }
 
     public List<CategoryResponseDTO> getAllCategoryDTOs() {
-        return categoryMapper.toCategoryResponseDTOList(getAllCategories());
+        List<Category> categories = categoryRepository.findAll();
+        return categoryMapper.toCategoryResponseDTOList(categories);
+
     }
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
-
-    public Optional<CategoryResponseDTO> getCategoryResponseDTOById(Integer id) {
-        Optional<Category> categoryOptional = getCategoryById(id);
-        if (categoryOptional.isPresent()) {
-            CategoryResponseDTO dto = categoryMapper.toResponseDTO(categoryOptional.get());
-            return Optional.of(dto);
-        } else {
-            return Optional.empty();
-        }
+    public CategoryResponseDTO getCategoryResponseDTOById(Integer id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Category with ID " + id + " not found."));
+        return categoryMapper.toResponseDTO(category);
     }
 
     public Optional<Category> getCategoryById(Integer id) {
@@ -54,23 +50,20 @@ public class CategoryService {
 
     // Update Category
     public CategoryResponseDTO updateCategory(Integer id, CategoryRequestDTO categoryRequestDTO) {
-        Optional<Category> existingCategoryOptional = getCategoryById(id);
-        if (existingCategoryOptional.isPresent()) {
-            Category existingCategory = existingCategoryOptional.get();
-            // Update the existing category properties
-            existingCategory.setName(categoryRequestDTO.getName());
-            // Update parent category
-            updateParentCategory(existingCategory, categoryRequestDTO.getParentCategoryId());
-            categoryRepository.save(existingCategory);
-            return categoryMapper.toResponseDTO(existingCategory);
-        } else {
-            throw new IllegalArgumentException("Category with ID " + id + " does not exist.");
-        }
+
+        Category existingCategory = categoryRepository.findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Category with ID " + id + " does not exist."));
+        // Update the existing category properties
+        existingCategory.setName(categoryRequestDTO.getName());
+        // Update parent category
+        updateParentCategory(existingCategory, categoryRequestDTO.getParentCategoryId());
+        Category updatedCategory = categoryRepository.save(existingCategory);
+        return categoryMapper.toResponseDTO(updatedCategory);
     }
 
     public void deleteCategory(Integer id) {
         if (!categoryRepository.existsById(id)) {
-            throw new IllegalArgumentException("Category with ID " + id + " does not exist.");
+            throw new CategoryNotFoundException("Category with ID " + id + " does not exist.");
         }
         categoryRepository.deleteById(id);
     }
@@ -79,7 +72,7 @@ public class CategoryService {
     private void updateParentCategory(Category category, Integer newParentCategoryId) {
         // Category cannot be its own parent
         if (newParentCategoryId != null && newParentCategoryId.equals(category.getId())) {
-            throw new IllegalArgumentException("A category cannot be its own parent.");
+            throw new SelfParentCategoryException("A category cannot be its own parent.");
         }
         // Remove from the old parent category's subcategories
         if (category.getParentCategory() != null) {

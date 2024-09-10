@@ -21,35 +21,27 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponseDTO> getAllProducts() {
-        return productService.getAllProductDTOs();
+    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
+        List<ProductResponseDTO> productResponseDTOS= productService.getAllProductDTOs();
+        return ResponseEntity.ok(productResponseDTOS);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Integer id) {
-        return productService.getProductResponseDTOById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        ProductResponseDTO productResponseDTO = productService.getProductResponseDTOById(id);
+        return ResponseEntity.ok(productResponseDTO);
     }
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
-        try {
-            ProductResponseDTO productResponseDTO = productService.saveProduct(productRequestDTO);
-            return ResponseEntity.ok(productResponseDTO);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        ProductResponseDTO createdProduct = productService.saveProduct(productRequestDTO);
+        return ResponseEntity.status(201).body(createdProduct);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Integer id, @RequestBody ProductRequestDTO productRequestDTO) {
-        try {
-            ProductResponseDTO updatedProduct = productService.updateProduct(id, productRequestDTO);
-            return ResponseEntity.ok(updatedProduct);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        ProductResponseDTO updatedProduct = productService.updateProduct(id, productRequestDTO);
+        return ResponseEntity.ok(updatedProduct);
     }
 
     @DeleteMapping("/{id}")

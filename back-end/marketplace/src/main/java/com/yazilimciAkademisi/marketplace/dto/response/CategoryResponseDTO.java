@@ -3,6 +3,7 @@ package com.yazilimciAkademisi.marketplace.dto.response;
 import java.util.Set;
 
 public class CategoryResponseDTO {
+
     private Integer id;
     private String name;
     private Integer parentCategoryId;

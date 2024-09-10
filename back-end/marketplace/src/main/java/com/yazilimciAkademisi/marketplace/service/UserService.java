@@ -4,6 +4,8 @@ import com.yazilimciAkademisi.marketplace.dto.mapper.UserMapper;
 import com.yazilimciAkademisi.marketplace.dto.request.UserRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.UserResponseDTO;
 import com.yazilimciAkademisi.marketplace.entity.AppUser;
+import com.yazilimciAkademisi.marketplace.exception.AppUserNotFoundException;
+import com.yazilimciAkademisi.marketplace.exception.StoreNotFoundException;
 import com.yazilimciAkademisi.marketplace.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +26,14 @@ public class UserService {
     }
 
     public List<UserResponseDTO> getAllUserDTOs() {
-        return userMapper.toUserResponseDTOList(userRepository.findAll());
+        List<AppUser> appUsers = userRepository.findAll();
+        return userMapper.toUserResponseDTOList(appUsers);
     }
 
-    public Optional<UserResponseDTO> getUserResponseDTOById(Integer id) {
-        Optional<AppUser> userOptional = userRepository.findById(id);
-        return userOptional.map(userMapper::toResponseDTO);
+    public UserResponseDTO getUserResponseDTOById(Integer id) {
+        AppUser user = userRepository.findById(id)
+                .orElseThrow(() -> new AppUserNotFoundException("User with ID " + id + " does not exist."));
+        return userMapper.toResponseDTO(user);
     }
 
     public UserResponseDTO saveUser(UserRequestDTO userRequestDTO) {
@@ -39,22 +43,18 @@ public class UserService {
     }
 
     public UserResponseDTO updateUser(Integer id, UserRequestDTO userRequestDTO) {
-        Optional<AppUser> existingUserOptional = userRepository.findById(id);
-        if (existingUserOptional.isPresent()) {
-            AppUser existingAppUser = existingUserOptional.get();
-            existingAppUser.setUsername(userRequestDTO.getUsername());
-            existingAppUser.setPassword(userRequestDTO.getPassword());
-            existingAppUser.setEmail(userRequestDTO.getEmail());
-            AppUser updatedAppUser = userRepository.save(existingAppUser);
-            return userMapper.toResponseDTO(updatedAppUser);
-        } else {
-            throw new IllegalArgumentException("Store with ID " + id + " does not exist.");
-        }
+        AppUser existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new AppUserNotFoundException("User with ID " + id + " does not exist."));
+        existingUser.setUsername(userRequestDTO.getUsername());
+        existingUser.setPassword(userRequestDTO.getPassword());
+        existingUser.setEmail(userRequestDTO.getEmail());
+        AppUser updatedAppUser = userRepository.save(existingUser);
+        return userMapper.toResponseDTO(updatedAppUser);
     }
 
     public void deleteUser(Integer id) {
         if (!userRepository.existsById(id)) {
-            throw new IllegalArgumentException("User with ID " + id + " does not exist.");
+            throw new AppUserNotFoundException("User with ID " + id + " does not exist.");
         }
         userRepository.deleteById(id);
     }

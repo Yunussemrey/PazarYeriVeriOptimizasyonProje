@@ -20,35 +20,27 @@ public class StoreController {
     }
 
     @GetMapping
-    public List<StoreResponseDTO> getAllStores() {
-        return storeService.getAllStoreDTOs();
+    public ResponseEntity<List<StoreResponseDTO>> getAllStores() {
+        List<StoreResponseDTO> stores = storeService.getAllStoreDTOs();
+        return ResponseEntity.ok(stores);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StoreResponseDTO> getStoreById(@PathVariable Integer id) {
-        return storeService.getStoreResponseDTOById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        StoreResponseDTO storeResponseDTO = storeService.getStoreResponseDTOById(id);
+        return ResponseEntity.ok(storeResponseDTO);
     }
 
     @PostMapping
     public ResponseEntity<StoreResponseDTO> createStore(@RequestBody StoreRequestDTO storeRequestDTO) {
-        try {
-            StoreResponseDTO storeResponseDTO = storeService.saveStore(storeRequestDTO);
-            return ResponseEntity.ok(storeResponseDTO);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        StoreResponseDTO createdStore = storeService.saveStore(storeRequestDTO);
+        return ResponseEntity.status(201).body(createdStore);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<StoreResponseDTO> updateStore(@PathVariable Integer id, @RequestBody StoreRequestDTO storeRequestDTO) {
-        try {
-            StoreResponseDTO storeResponseDTO = storeService.updateStore(id, storeRequestDTO);
-            return ResponseEntity.ok(storeResponseDTO);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+        StoreResponseDTO updatedStore = storeService.updateStore(id, storeRequestDTO);
+        return ResponseEntity.ok(updatedStore);
     }
 
     @DeleteMapping("/{id}")

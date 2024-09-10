@@ -1,8 +1,6 @@
 package com.yazilimciAkademisi.marketplace.controller;
 
-import com.yazilimciAkademisi.marketplace.dto.request.StoreRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.request.UserRequestDTO;
-import com.yazilimciAkademisi.marketplace.dto.response.StoreResponseDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.UserResponseDTO;
 import com.yazilimciAkademisi.marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,35 +20,27 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserResponseDTO> gelAllUsers() {
-        return userService.getAllUserDTOs();
+    public ResponseEntity<List<UserResponseDTO>> gelAllUsers() {
+        List<UserResponseDTO> users = userService.getAllUserDTOs();
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Integer id) {
-        return userService.getUserResponseDTOById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        UserResponseDTO userResponseDTO = userService.getUserResponseDTOById(id);
+        return ResponseEntity.ok(userResponseDTO);
     }
 
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
-        try {
-            UserResponseDTO userResponseDTO = userService.saveUser(userRequestDTO);
-            return ResponseEntity.ok(userResponseDTO);
-        } catch (IllegalArgumentException e) {
-            return  ResponseEntity.badRequest().body(null);
-        }
+        UserResponseDTO createdUser = userService.saveUser(userRequestDTO);
+        return ResponseEntity.status(201).body(createdUser);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Integer id, @RequestBody UserRequestDTO userRequestDTO) {
-        try {
-            UserResponseDTO userResponseDTO = userService.updateUser(id, userRequestDTO);
-            return ResponseEntity.ok(userResponseDTO);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+        UserResponseDTO updatedUser = userService.updateUser(id, userRequestDTO);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")

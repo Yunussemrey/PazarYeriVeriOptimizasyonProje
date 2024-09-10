@@ -22,7 +22,6 @@ public class CategoryMapper {
         dto.setId(category.getId());
         dto.setName(category.getName());
         dto.setParentCategoryId(category.getParentCategory() != null ? category.getParentCategory().getId() : null);
-
         dto.setSubCategories(category.getSubCategories().stream()
                 .map(this::toResponseDTO)
                 .collect(Collectors.toSet()));

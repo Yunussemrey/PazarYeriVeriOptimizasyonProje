@@ -7,6 +7,10 @@ import com.yazilimciAkademisi.marketplace.entity.Brand;
 import com.yazilimciAkademisi.marketplace.entity.Category;
 import com.yazilimciAkademisi.marketplace.entity.Product;
 import com.yazilimciAkademisi.marketplace.entity.Store;
+import com.yazilimciAkademisi.marketplace.exception.BrandNotFoundException;
+import com.yazilimciAkademisi.marketplace.exception.CategoryNotFoundException;
+import com.yazilimciAkademisi.marketplace.exception.ProductNotFoundException;
+import com.yazilimciAkademisi.marketplace.exception.StoreNotFoundException;
 import com.yazilimciAkademisi.marketplace.repository.BrandRepository;
 import com.yazilimciAkademisi.marketplace.repository.CategoryRepository;
 import com.yazilimciAkademisi.marketplace.repository.ProductRepository;
@@ -38,21 +42,15 @@ public class ProductService {
     }
 
     public List<ProductResponseDTO> getAllProductDTOs() {
-        return productMapper.toProductResponseDTOList(getAllProducts());
+        List<Product> products = productRepository.findAll();
+        return productMapper.toProductResponseDTOList(products);
+
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-
-    public Optional<ProductResponseDTO> getProductResponseDTOById(Integer id) {
-        Optional<Product> productOptional = getProductById(id);
-        if (productOptional.isPresent()) {
-            ProductResponseDTO dto = productMapper.toResponseDTO(productOptional.get());
-            return Optional.of(dto);
-        } else {
-            return Optional.empty();
-        }
+    public ProductResponseDTO getProductResponseDTOById(Integer id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product with ID " + id + " not found."));
+        return productMapper.toResponseDTO(product);
     }
 
     public Optional<Product> getProductById(Integer id) {
@@ -63,19 +61,19 @@ public class ProductService {
         // Check if Category exists
         Optional<Category> categoryOptional = categoryRepository.findById(productRequestDTO.getCategoryId());
         if (categoryOptional.isEmpty()) {
-            throw new IllegalArgumentException("Category with ID " + productRequestDTO.getCategoryId() + " does not exist.");
+            throw new CategoryNotFoundException("Category with ID " + productRequestDTO.getCategoryId() + " does not exist.");
         }
 
         // Check if Brand exists
         Optional<Brand> brandOptional = brandRepository.findById(productRequestDTO.getBrandId());
         if (brandOptional.isEmpty()) {
-            throw new IllegalArgumentException("Brand with ID " + productRequestDTO.getBrandId() + " does not exist.");
+            throw new BrandNotFoundException("Brand with ID " + productRequestDTO.getBrandId() + " does not exist.");
         }
 
         // Check if Store exists
         Optional<Store> storeOptional = storeRepository.findById(productRequestDTO.getStoreId());
         if (storeOptional.isEmpty()) {
-            throw new IllegalArgumentException("Store with ID " + productRequestDTO.getStoreId() + " does not exist.");
+            throw new StoreNotFoundException("Store with ID " + productRequestDTO.getStoreId() + " does not exist.");
         }
 
         // Create Product entity
@@ -92,28 +90,28 @@ public class ProductService {
     }
 
     public ProductResponseDTO updateProduct(Integer id, ProductRequestDTO productRequestDTO) {
-        // Check if Category exists
-        Optional<Category> categoryOptional = categoryRepository.findById(productRequestDTO.getCategoryId());
-        if (categoryOptional.isEmpty()) {
-            throw new IllegalArgumentException("Category with ID " + productRequestDTO.getCategoryId() + " does not exist.");
-        }
-
-        // Check if Brand exists
-        Optional<Brand> brandOptional = brandRepository.findById(productRequestDTO.getBrandId());
-        if (brandOptional.isEmpty()) {
-            throw new IllegalArgumentException("Brand with ID " + productRequestDTO.getBrandId() + " does not exist.");
-        }
-
         // Find existing Product
         Optional<Product> existingProductOptional = getProductById(id);
         if (existingProductOptional.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
         }
 
+        // Check if Category exists
+        Optional<Category> categoryOptional = categoryRepository.findById(productRequestDTO.getCategoryId());
+        if (categoryOptional.isEmpty()) {
+            throw new CategoryNotFoundException("Category with ID " + productRequestDTO.getCategoryId() + " does not exist.");
+        }
+
+        // Check if Brand exists
+        Optional<Brand> brandOptional = brandRepository.findById(productRequestDTO.getBrandId());
+        if (brandOptional.isEmpty()) {
+            throw new BrandNotFoundException("Brand with ID " + productRequestDTO.getBrandId() + " does not exist.");
+        }
+
         Product existingProduct = existingProductOptional.get();
 
         // TODO: Add control for update or add UpdateRequestDTO
-        // Update only given parameters
+        // TODO: Update only given parameters
         // Update Product entity
         existingProduct.setProductCode(productRequestDTO.getProductCode());
         existingProduct.setName(productRequestDTO.getName());
@@ -129,6 +127,9 @@ public class ProductService {
     }
 
     public void deleteProduct(Integer id) {
+        if (!productRepository.existsById(id)) {
+            throw new ProductNotFoundException("Product with ID " + id + " not found.");
+        }
         productRepository.deleteById(id);
     }
 }

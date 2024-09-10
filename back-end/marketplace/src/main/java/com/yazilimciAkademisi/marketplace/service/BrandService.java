@@ -4,6 +4,7 @@ import com.yazilimciAkademisi.marketplace.dto.mapper.BrandMapper;
 import com.yazilimciAkademisi.marketplace.dto.request.BrandRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.BrandResponseDTO;
 import com.yazilimciAkademisi.marketplace.entity.Brand;
+import com.yazilimciAkademisi.marketplace.exception.BrandNotFoundException;
 import com.yazilimciAkademisi.marketplace.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class BrandService {
+
     private final BrandRepository brandRepository;
     private final BrandMapper brandMapper;
 
@@ -23,21 +25,14 @@ public class BrandService {
     }
 
     public List<BrandResponseDTO> getAllBrandDTOs() {
-        return brandMapper.toBrandResponseDTOList(getAllBrands());
+        List<Brand> brands = brandRepository.findAll();
+        return brandMapper.toBrandResponseDTOList(brands);
     }
 
-    public List<Brand> getAllBrands() {
-        return brandRepository.findAll();
-    }
-
-    public Optional<BrandResponseDTO> getBrandResponseDTOById(Integer id) {
-        Optional<Brand> brandOptional = getBrandById(id);
-        if (brandOptional.isPresent()) {
-            BrandResponseDTO dto = brandMapper.toResponseDTO(brandOptional.get());
-            return Optional.of(dto);
-        } else {
-            return Optional.empty();
-        }
+    public BrandResponseDTO getBrandResponseDTOById(Integer id) {
+        Brand brand = brandRepository.findById(id)
+                .orElseThrow(() -> new BrandNotFoundException("Brand with ID " + id + " not found."));
+        return brandMapper.toResponseDTO(brand);
     }
 
     public Optional<Brand> getBrandById(Integer id) {
@@ -51,15 +46,16 @@ public class BrandService {
     }
 
     public BrandResponseDTO updateBrand(Integer id, BrandRequestDTO brandRequestDTO) {
-        Brand existingBrand = this.getBrandById(id).get();
+        Brand existingBrand = brandRepository.findById(id)
+                .orElseThrow(() -> new BrandNotFoundException("Brand with ID " + id + " not found."));
         existingBrand.setName(brandRequestDTO.getName());
-        brandRepository.save(existingBrand);
-        return brandMapper.toResponseDTO(existingBrand);
+        Brand updatedBrand = brandRepository.save(existingBrand);
+        return brandMapper.toResponseDTO(updatedBrand);
     }
 
     public void deleteBrand(Integer id) {
         if (!brandRepository.existsById(id)) {
-            throw new IllegalArgumentException("Brand with ID " + id + " does not exist.");
+            throw new BrandNotFoundException("Brand with ID " + id + " does not exist.");
         }
         brandRepository.deleteById(id);
     }
