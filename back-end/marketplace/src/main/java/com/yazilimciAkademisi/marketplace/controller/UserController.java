@@ -1,6 +1,7 @@
 package com.yazilimciAkademisi.marketplace.controller;
 
 import com.yazilimciAkademisi.marketplace.dto.request.UserRequestDTO;
+import com.yazilimciAkademisi.marketplace.dto.request.UserUpdateRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.UserResponseDTO;
 import com.yazilimciAkademisi.marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+
     private final UserService userService;
 
     @Autowired
@@ -31,15 +33,9 @@ public class UserController {
         return ResponseEntity.ok(userResponseDTO);
     }
 
-    @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO createdUser = userService.saveUser(userRequestDTO);
-        return ResponseEntity.status(201).body(createdUser);
-    }
-
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Integer id, @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO updatedUser = userService.updateUser(id, userRequestDTO);
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Integer id, @RequestBody UserUpdateRequestDTO userUpdateRequestDTO) {
+        UserResponseDTO updatedUser = userService.updateUser(id, userUpdateRequestDTO);
         return ResponseEntity.ok(updatedUser);
     }
 
