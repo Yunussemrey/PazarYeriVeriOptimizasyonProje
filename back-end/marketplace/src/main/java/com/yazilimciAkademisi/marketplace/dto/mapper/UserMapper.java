@@ -2,7 +2,7 @@ package com.yazilimciAkademisi.marketplace.dto.mapper;
 
 import com.yazilimciAkademisi.marketplace.dto.request.UserRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.UserResponseDTO;
-import com.yazilimciAkademisi.marketplace.entity.AppUser;
+import com.yazilimciAkademisi.marketplace.entity.User;
 import com.yazilimciAkademisi.marketplace.entity.enums.Role;
 import org.springframework.stereotype.Component;
 
@@ -18,20 +18,21 @@ public class UserMapper {
         this.storeMapper = storeMapper;
     }
 
-
-    public AppUser toEntity(UserRequestDTO dto) {
-        AppUser appUser = new AppUser();
-        appUser.setUsername(dto.getUsername());
-        appUser.setPassword(dto.getPassword());
-        appUser.setEmail(dto.getEmail());
-        appUser.setRole(Role.STOREUSER);
-        return appUser;
+    public User toEntity(UserRequestDTO dto, String encodedPassword) {
+        User newUser = new User();
+        newUser.setFirstName(dto.getFirstName());
+        newUser.setLastName(dto.getLastName());
+        newUser.setPassword(encodedPassword);
+        newUser.setEmail(dto.getEmail());
+        newUser.setRole(Role.STOREUSER);
+        return newUser;
     }
 
-    public UserResponseDTO toResponseDTO(AppUser appUser) {
+    public UserResponseDTO toResponseDTO(User appUser) {
         UserResponseDTO dto = new UserResponseDTO();
         dto.setId(appUser.getId());
-        dto.setUsername(appUser.getUsername());
+        dto.setFirstName(appUser.getFirstName());
+        dto.setLastName(appUser.getLastName());
         dto.setPassword(appUser.getPassword());
         dto.setEmail(appUser.getEmail());
         dto.setRole(appUser.getRole());
@@ -41,7 +42,7 @@ public class UserMapper {
         return dto;
     }
 
-    public List<UserResponseDTO> toUserResponseDTOList(List<AppUser> appUserList) {
+    public List<UserResponseDTO> toUserResponseDTOList(List<User> appUserList) {
         return appUserList.stream()
                 .map(this::toResponseDTO)
                 .collect(Collectors.toList());
