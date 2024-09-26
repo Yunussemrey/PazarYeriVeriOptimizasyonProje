@@ -1,24 +1,24 @@
 package com.yazilimciAkademisi.marketplace.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Store {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String storeName;
+    private String name;  // Changed from storeName to name for consistency
 
     private String description;
 
     @Column(nullable = false)
-    private String contactInfo;
+    private String phone;
 
     private String address;
 
@@ -28,12 +28,12 @@ public class Store {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User appUser;
+    @OneToOne  // One-to-one relationship with User
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
 
     @PrePersist
     protected void onCreate() {
@@ -49,15 +49,16 @@ public class Store {
     public Store() {
     }
 
-    public Store(Integer id, String storeName, String description, String contactInfo, String address, User appUser) {
+    public Store(Integer id, String name, String description, String phone, String address, User user) {
         this.id = id;
-        this.storeName = storeName;
+        this.name = name;
         this.description = description;
-        this.contactInfo = contactInfo;
+        this.phone = phone;
         this.address = address;
-        this.appUser = appUser;
+        this.user = user;
     }
 
+    // Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -66,12 +67,12 @@ public class Store {
         this.id = id;
     }
 
-    public String getStoreName() {
-        return storeName;
+    public String getName() {
+        return name;
     }
 
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -82,12 +83,12 @@ public class Store {
         this.description = description;
     }
 
-    public String getContactInfo() {
-        return contactInfo;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setContactInfo(String contactInfo) {
-        this.contactInfo = contactInfo;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAddress() {
@@ -123,10 +124,10 @@ public class Store {
     }
 
     public User getUser() {
-        return appUser;
+        return user;
     }
 
-    public void setUser(User appUser) {
-        this.appUser = appUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -5,6 +5,7 @@ import com.yazilimciAkademisi.marketplace.dto.response.ProductResponseDTO;
 import com.yazilimciAkademisi.marketplace.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,33 +21,54 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
-        List<ProductResponseDTO> productResponseDTOS= productService.getAllProductDTOs();
-        return ResponseEntity.ok(productResponseDTOS);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Integer id) {
-        ProductResponseDTO productResponseDTO = productService.getProductResponseDTOById(id);
-        return ResponseEntity.ok(productResponseDTO);
-    }
-
+    // Store Owner: Create a new product
+    @PreAuthorize("hasAuthority('STORE_OWNER')")
     @PostMapping
-    public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
-        ProductResponseDTO createdProduct = productService.saveProduct(productRequestDTO);
+    public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO requestDTO) {
+        ProductResponseDTO createdProduct = productService.createProduct(requestDTO);
         return ResponseEntity.status(201).body(createdProduct);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Integer id, @RequestBody ProductRequestDTO productRequestDTO) {
-        ProductResponseDTO updatedProduct = productService.updateProduct(id, productRequestDTO);
+    // Store Owner: Update an existing product
+    @PreAuthorize("hasAuthority('STORE_OWNER')")
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductResponseDTO> updateProduct(
+            @PathVariable Integer productId,
+            @RequestBody ProductRequestDTO requestDTO) {
+        ProductResponseDTO updatedProduct = productService.updateProduct(productId, requestDTO);
         return ResponseEntity.ok(updatedProduct);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
-        productService.deleteProduct(id);
+    // Authenticated users: Get a product by its ID
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Integer productId) {
+        ProductResponseDTO productResponse = productService.getProductById(productId);
+        return ResponseEntity.ok(productResponse);
+    }
+
+    // Authenticated users: Get all products of a store
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/store/{storeId}")
+    public ResponseEntity<List<ProductResponseDTO>> getProductsByStore(@PathVariable Integer storeId) {
+        List<ProductResponseDTO> products = productService.getProductsByStore(storeId);
+        return ResponseEntity.ok(products);
+    }
+
+    // Authenticated users: Get all products
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping
+    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
+        List<ProductResponseDTO> products = productService.getAllProducts();
+        return ResponseEntity.ok(products);
+    }
+
+    // Store Owner: Delete a product by its ID
+    @PreAuthorize("hasAuthority('STORE_OWNER')")
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {
+        productService.deleteProduct(productId);
         return ResponseEntity.noContent().build();
     }
 }
+

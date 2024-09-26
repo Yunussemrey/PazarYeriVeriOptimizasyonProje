@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 
 public class StoreResponseDTO {
     private Integer id;
-    private String storeName;
+    private String name;
     private String description;
-    private String contactInfo;
+    private String phone;
     private String address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -19,12 +19,12 @@ public class StoreResponseDTO {
         this.id = id;
     }
 
-    public String getStoreName() {
-        return storeName;
+    public String getName() {
+        return name;
     }
 
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -35,12 +35,12 @@ public class StoreResponseDTO {
         this.description = description;
     }
 
-    public String getContactInfo() {
-        return contactInfo;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setContactInfo(String contactInfo) {
-        this.contactInfo = contactInfo;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAddress() {

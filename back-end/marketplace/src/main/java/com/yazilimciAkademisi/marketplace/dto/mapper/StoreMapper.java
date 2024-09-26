@@ -3,6 +3,7 @@ package com.yazilimciAkademisi.marketplace.dto.mapper;
 import com.yazilimciAkademisi.marketplace.dto.request.StoreRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.StoreResponseDTO;
 import com.yazilimciAkademisi.marketplace.entity.Store;
+import com.yazilimciAkademisi.marketplace.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,21 +12,22 @@ import java.util.stream.Collectors;
 @Component
 public class StoreMapper {
 
-    public Store toEntity(StoreRequestDTO dto) {
+    public Store toEntity(StoreRequestDTO dto, User owner) {
         Store store = new Store();
-        store.setStoreName(dto.getStoreName());
+        store.setName(dto.getName());
         store.setDescription(dto.getDescription());
-        store.setContactInfo(dto.getContactInfo());
+        store.setPhone(dto.getPhone());
         store.setAddress(dto.getAddress());
+        store.setUser(owner);
         return store;
     }
 
     public StoreResponseDTO toResponseDTO(Store store) {
         StoreResponseDTO dto = new StoreResponseDTO();
         dto.setId(store.getId());
-        dto.setStoreName(store.getStoreName());
+        dto.setName(store.getName());
         dto.setDescription(store.getDescription());
-        dto.setContactInfo(store.getContactInfo());
+        dto.setPhone(store.getPhone());
         dto.setAddress(store.getAddress());
         dto.setCreatedAt(store.getCreatedAt());
         dto.setUpdatedAt(store.getUpdatedAt());

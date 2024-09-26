@@ -1,16 +1,16 @@
 package com.yazilimciAkademisi.marketplace.entity;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
 @Entity
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String productCode;
 
     @Column(nullable = false)
@@ -26,27 +26,30 @@ public class Product {
     private Integer stockQuantity;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "brandId", nullable = false)
+    @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
     @ManyToOne
-    @JoinColumn(name = "storeId", nullable = false)
+    @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
     public Product() {
     }
 
-    public Product(Integer id, String productCode, String name, String description, BigDecimal price, Integer stockQuantity, Category category) {
+    public Product(Integer id, String productCode, String name, String description, BigDecimal price, Integer stockQuantity, Category category, Brand brand, Store store) {
         this.id = id;
         this.productCode = productCode;
         this.name = name;
         this.description = description;
         this.price = price;
         this.stockQuantity = stockQuantity;
+        this.category = category;
+        this.brand = brand;
+        this.store = store;
     }
 
     public Integer getId() {

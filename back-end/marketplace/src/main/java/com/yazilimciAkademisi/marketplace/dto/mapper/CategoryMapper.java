@@ -5,6 +5,7 @@ import com.yazilimciAkademisi.marketplace.dto.response.CategoryResponseDTO;
 import com.yazilimciAkademisi.marketplace.entity.Category;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,9 +23,10 @@ public class CategoryMapper {
         dto.setId(category.getId());
         dto.setName(category.getName());
         dto.setParentCategoryId(category.getParentCategory() != null ? category.getParentCategory().getId() : null);
-        dto.setSubCategories(category.getSubCategories().stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toSet()));
+        dto.setSubCategories(category.getSubCategories() != null ?
+                category.getSubCategories().stream()
+                        .map(this::toResponseDTO)
+                        .collect(Collectors.toSet()) : Collections.emptySet());
         return dto;
     }
 

@@ -3,39 +3,44 @@ package com.yazilimciAkademisi.marketplace.controller;
 import com.yazilimciAkademisi.marketplace.dto.request.AuthenticationRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.request.UserRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.AuthenticationResponseDTO;
+import com.yazilimciAkademisi.marketplace.entity.enums.Role;
 import com.yazilimciAkademisi.marketplace.service.AuthenticationService;
-import com.yazilimciAkademisi.marketplace.service.UserService;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.crypto.SecretKey;
-import java.util.Base64;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
-    private final AuthenticationService authService;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public AuthenticationController(AuthenticationService authService) {
-        this.authService = authService;
+    public AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponseDTO> register(@RequestBody UserRequestDTO request) {
-        return ResponseEntity.ok(authService.register(request));
+    public ResponseEntity<AuthenticationResponseDTO> register(@RequestBody UserRequestDTO requestDTO) {
+        AuthenticationResponseDTO response = authenticationService.register(requestDTO);
+        return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponseDTO> authenticate(@RequestBody AuthenticationRequestDTO request) {
-        return ResponseEntity.ok(authService.authenticate(request));
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody AuthenticationRequestDTO requestDTO) {
+        AuthenticationResponseDTO response = authenticationService.authenticate(requestDTO);
+        return ResponseEntity.ok(response);
+    }
+
+    // No need to do anything here, just let the front-end remove the token
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        return ResponseEntity.ok().build();
     }
 
 }
