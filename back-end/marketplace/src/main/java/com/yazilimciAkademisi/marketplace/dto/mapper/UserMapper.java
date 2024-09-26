@@ -1,6 +1,8 @@
 package com.yazilimciAkademisi.marketplace.dto.mapper;
 
 import com.yazilimciAkademisi.marketplace.dto.request.UserRequestDTO;
+import com.yazilimciAkademisi.marketplace.dto.request.UserUpdateRequestDTO;
+import com.yazilimciAkademisi.marketplace.dto.response.SimpleUserResponseDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.UserResponseDTO;
 import com.yazilimciAkademisi.marketplace.entity.User;
 import com.yazilimciAkademisi.marketplace.entity.enums.Role;
@@ -22,9 +24,9 @@ public class UserMapper {
         User newUser = new User();
         newUser.setFirstName(dto.getFirstName());
         newUser.setLastName(dto.getLastName());
-        newUser.setPassword(encodedPassword);
         newUser.setEmail(dto.getEmail());
-        newUser.setRole(Role.STOREUSER);
+        newUser.setPassword(encodedPassword);
+        newUser.setRole(Role.USER); // Every new account has standard USER role.
         return newUser;
     }
 
@@ -33,12 +35,21 @@ public class UserMapper {
         dto.setId(appUser.getId());
         dto.setFirstName(appUser.getFirstName());
         dto.setLastName(appUser.getLastName());
-        dto.setPassword(appUser.getPassword());
         dto.setEmail(appUser.getEmail());
         dto.setRole(appUser.getRole());
-        if (dto.getStore() != null) {
+        if (appUser.getStore() != null) {
             dto.setStore(storeMapper.toResponseDTO(appUser.getStore()));
         }
+        return dto;
+    }
+
+    public SimpleUserResponseDTO toSimpleResponseDTO(User user) {
+        SimpleUserResponseDTO dto = new SimpleUserResponseDTO();
+        dto.setId(user.getId());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setEmail(user.getEmail());
+        dto.setRole(user.getRole());
         return dto;
     }
 
@@ -46,5 +57,17 @@ public class UserMapper {
         return appUserList.stream()
                 .map(this::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    public List<SimpleUserResponseDTO> toSimpleUserResponseDTOList(List<User> appUserList) {
+        return appUserList.stream()
+                .map(this::toSimpleResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public void updateUserFromDTO(UserUpdateRequestDTO dto, User user) {
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setEmail(dto.getEmail());
     }
 }

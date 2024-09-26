@@ -2,14 +2,13 @@ package com.yazilimciAkademisi.marketplace.dto.response;
 
 import com.yazilimciAkademisi.marketplace.entity.enums.Role;
 
-public class UserResponseDTO {
+public class SimpleUserResponseDTO {
 
     private Integer id;
     private String firstName;
     private String lastName;
     private String email;
     private Role role;
-    private StoreResponseDTO store;
 
     public Integer getId() {
         return id;
@@ -49,13 +48,5 @@ public class UserResponseDTO {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public StoreResponseDTO getStore() {
-        return store;
-    }
-
-    public void setStore(StoreResponseDTO store) {
-        this.store = store;
     }
 }

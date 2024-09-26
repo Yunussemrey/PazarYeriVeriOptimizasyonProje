@@ -25,25 +25,24 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Store store;
 
     public User() {
     }
 
-    public User(Integer id, String firstName, String lastName, String password, String email, Role role, Store store) {
+    public User(Integer id, String firstName, String lastName, String password, String email, Store store) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
-        this.role = role;
         this.store = store;
     }
 

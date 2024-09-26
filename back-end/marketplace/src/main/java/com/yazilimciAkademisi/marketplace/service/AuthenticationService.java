@@ -31,13 +31,14 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponseDTO register(UserRequestDTO request) {
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
-        User newAppUser = userMapper.toEntity(request, encodedPassword);
-        userRepository.save(newAppUser);
-        var jwtToken = jwtService.generateToken(newAppUser);
+    public AuthenticationResponseDTO register(UserRequestDTO requestDTO) {
+        String encodedPassword = passwordEncoder.encode(requestDTO.getPassword());
+        User newUser = userMapper.toEntity(requestDTO, encodedPassword);
+        userRepository.save(newUser);
+        String jwtToken = jwtService.generateToken(newUser);
         AuthenticationResponseDTO authenticationResponseDTO = new AuthenticationResponseDTO();
         authenticationResponseDTO.setToken(jwtToken);
+        authenticationResponseDTO.setRole(newUser.getRole().name());
         return authenticationResponseDTO;
     }
 
@@ -48,11 +49,12 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = userRepository.findByEmail(request.getEmail())
+        User authenticatedUser = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(authenticatedUser);
         AuthenticationResponseDTO authenticationResponseDTO = new AuthenticationResponseDTO();
         authenticationResponseDTO.setToken(jwtToken);
+        authenticationResponseDTO.setRole(authenticatedUser.getRole().name());
         return authenticationResponseDTO;
     }
 

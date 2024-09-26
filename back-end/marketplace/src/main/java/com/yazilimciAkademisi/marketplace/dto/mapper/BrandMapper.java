@@ -29,4 +29,9 @@ public class BrandMapper {
                 .map(this::toResponseDTO)
                 .collect(Collectors.toList());
     }
+
+    // Method to update existing brand using DTO
+    public void updateBrandFromDTO(BrandRequestDTO dto, Brand brand) {
+        brand.setName(dto.getName());
+    }
 }
