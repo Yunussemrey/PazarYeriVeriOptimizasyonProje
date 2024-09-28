@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+      <!-- Favicon Ekleme -->
+      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+      <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pazar Yeri Ürün Yönetimi</title>
@@ -10,14 +13,18 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #121212;
+            background-color: #333333;
             color: #fff;
             transition: background-color 0.3s, color 0.3s;
         }
 
         body.light-theme {
             background-color: #f4f4f4;
-            color: #333;
+            color: #000000;
+        }
+        body.dark-theme .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid #f1c40f;
         }
 
         .navbar {
@@ -35,6 +42,10 @@
             margin-right: 20px;
             font-weight: 500;
         }
+        .navbar .navbar-nav .nav-link.active {
+            color: #f1c40f !important; /* Seçili sayfa sarı renkte */
+        }
+
 
         .navbar .navbar-nav .nav-link:hover {
             color: #f1c40f !important;
@@ -161,14 +172,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"></li>
+                        <a class="nav-link" href="sayfam.html">Kullanıcı</a>
+                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="profil.html">Profil</a>
+                        <a class="nav-link" href="profil.html">Mağazam</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="ürünler.html">Ürünler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pazaryeri.html">Pazar Yeri</a>
+                        <a class="nav-link active" href="pazaryeri.html">Pazar Yeri</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="siparis.html">Siparişler</a>
@@ -177,7 +191,10 @@
                         <a class="nav-link" href="satis.html">Satış Yönetimi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="ayarlar.html">Ayarlar</a>
+                        <a class="nav-link " href="efatura.html">E-Fatura</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logout-btn">Çıkış Yap</a>
                     </li>
                 </ul>
             </div>
@@ -312,14 +329,26 @@
                 <a href="#"><i class="fab fa-twitter"></i></a>
                 <a href="#"><i class="fab fa-instagram"></i></a>
             </div>
-            <p class="mt-3">&copy; 2024 Tüm Hakları Saklıdır. Pazar Yeri Ürün Yönetimi</p>
+             <p>© 2024 Pazarın Yeri | <a href="#">Gizlilik Politikası</a> | <a href="#">Kullanım Şartları</a></p>
         </div>
     </footer>
-
+ <!-- jQuery and Bootstrap Bundle with Popper -->
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
         function toggleTheme() {
             document.body.classList.toggle('light-theme');
         }
+        // Logout Button Logic
+        const logoutBtn = document.getElementById('logout-btn');
+        logoutBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            const confirmLogout = confirm("Sistemden çıkmak istediğinizden emin misiniz?");
+            if (confirmLogout) {
+                window.location.href = 'index.html'; // Redirect to logout page or perform logout action
+            }
+        });
     </script>
 </body>
 </html>

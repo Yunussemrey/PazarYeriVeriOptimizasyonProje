@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+      <!-- Favicon Ekleme -->
+      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+      <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <!-- Basic Meta Tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,9 +46,30 @@
             margin-right: 20px;
             font-weight: 500;
         }
+        .navbar .navbar-nav .nav-link.active {
+            color: #f1c40f !important; /* Seçili sayfa sarı renkte */
+        }
+
 
         .navbar .navbar-nav .nav-link:hover {
             color: #f1c40f !important;
+        }
+        .navbar-expand-lg .container {
+            max-width: 100%;
+            padding: 0 20px;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+        }
+
+        .navbar-toggler .fa-bars {
+            color: #fff;
+            font-size: 28px;
         }
 
         .content-container {
@@ -104,22 +128,22 @@
         }
 
         .light-theme .navbar {
-            background-color: #f1f1f1;
+            background-color: #000000;
         }
 
         .light-theme .navbar .nav-link {
-            color: #000 !important;
+            color: #ffffff !important;
         }
 
         .light-theme .table-dark {
-            background-color: #fff;
-            border-color: #ccc;
+            background-color: #aeaeae;
+            border-color: #5c5a5a;
             color: #000;
         }
 
         .light-theme .footer {
-            background-color: #f1f1f1;
-            color: #000;
+            background-color: #000000;
+            color: #ffffff;
         }
 
         .light-theme .theme-toggle-btn {
@@ -145,8 +169,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"></li>
+                        <a class="nav-link" href="sayfam.html">Kullanıcı</a>
+                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="profil.html">Profil</a>
+                        <a class="nav-link" href="profil.html">Mağazam</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="ürünler.html">Ürünler</a>
@@ -155,14 +182,18 @@
                         <a class="nav-link" href="pazaryeri.html">Pazar Yeri</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="siparis.html">Siparişler</a>
+                        <a class="nav-link active" href="siparis.html">Siparişler</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="satis.html">Satış Yönetimi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="ayarlar.html">Ayarlar</a>
+                        <a class="nav-link " href="efatura.html">E-Fatura</a>
                     </li>
+                    <li class="nav-item"></li>
+                        <a class="nav-link" href="#" id="logout-btn">Çıkış Yap</a>
+                    </li>
+                   
                 </ul>
             </div>
         </div>
@@ -181,7 +212,7 @@
                         <th>Satış Adedi</th>
                         <th>Fiyat</th>
                         <th>KDV Oranı</th>
-                        <th>Stok Durumu</th>
+                        <th>Sipariş Durumu</th>
                         <th>Sipariş Adresi</th>
                         <th>Kargo Durumu</th>
                         <th>Müşteri Telefonu</th>
@@ -215,7 +246,7 @@
     <!-- Footer Start -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Tüm Hakları Saklıdır. Pazar Yeri Yönetimi</p>
+            <p>© 2024 Pazarın Yeri | <a href="#">Gizlilik Politikası</a> | <a href="#">Kullanım Şartları</a></p>
         </div>
     </footer>
     <!-- Footer End -->
@@ -233,6 +264,15 @@
         function toggleTheme() {
             document.body.classList.toggle('light-theme');
         }
+        // Logout Button Logic
+        const logoutBtn = document.getElementById('logout-btn');
+        logoutBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            const confirmLogout = confirm("Sistemden çıkmak istediğinizden emin misiniz?");
+            if (confirmLogout) {
+                window.location.href = 'index.html'; // Redirect to logout page or perform logout action
+            }
+        });
     </script>
 
 </body>
