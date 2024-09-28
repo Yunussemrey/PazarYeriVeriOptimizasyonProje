@@ -11,7 +11,6 @@ public class ProductRequestDTO {
     private Integer stockQuantity;
     private Integer categoryId;
     private Integer brandId;
-    private Integer storeId;
 
     public String getProductCode() {
         return productCode;
@@ -67,13 +66,5 @@ public class ProductRequestDTO {
 
     public void setBrandId(Integer brandId) {
         this.brandId = brandId;
-    }
-
-    public Integer getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(Integer storeId) {
-        this.storeId = storeId;
     }
 }

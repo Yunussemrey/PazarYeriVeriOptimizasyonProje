@@ -39,6 +39,14 @@ public class ProductController {
         return ResponseEntity.ok(updatedProduct);
     }
 
+    // Store Owner: Delete a product by its ID
+    @PreAuthorize("hasAuthority('STORE_OWNER')")
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {
+        productService.deleteProduct(productId);
+        return ResponseEntity.noContent().build();
+    }
+
     // Authenticated users: Get a product by its ID
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{productId}")
@@ -61,14 +69,6 @@ public class ProductController {
     public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
         List<ProductResponseDTO> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
-    }
-
-    // Store Owner: Delete a product by its ID
-    @PreAuthorize("hasAuthority('STORE_OWNER')")
-    @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {
-        productService.deleteProduct(productId);
-        return ResponseEntity.noContent().build();
     }
 }
 

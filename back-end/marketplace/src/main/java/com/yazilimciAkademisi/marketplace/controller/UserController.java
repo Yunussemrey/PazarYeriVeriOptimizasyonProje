@@ -77,6 +77,7 @@ public class UserController {
         userService.updateUserRole(userId, Role.USER);
         return ResponseEntity.ok().build();
     }
+    
 
 }
 
