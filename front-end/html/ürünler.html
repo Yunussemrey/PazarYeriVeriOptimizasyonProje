@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+      <!-- Favicon Ekleme -->
+      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+      <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+      
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,11 +38,12 @@
 
         body.dark-theme .navbar {
             background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px 0;
             border-bottom: 2px solid #f1c40f;
         }
 
         body.dark-theme .product-table {
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(186, 182, 182, 0.8);
             border-radius: 10px;
             padding: 20px;
             color: #000000;
@@ -73,21 +78,23 @@
 
         .light-theme .navbar {
             background-color: #000000;
+            padding: 20px 0;
+            border-bottom: 2px solid #f1c40f;
         }
 
         .light-theme .navbar .nav-link {
-            color: #000 !important;
+            color: #ffffff !important;
         }
 
         .light-theme .table-dark {
-            background-color: #fff;
+            background-color: #897f7f;
             border-color: #ccc;
             color: #000;
         }
 
         .light-theme .footer {
-            background-color: #f1f1f1;
-            color: #000;
+            background-color: #000000;
+            color: #f4efef;
         }
 
         .light-theme .theme-toggle-btn {
@@ -100,7 +107,7 @@
         }
 
         body.light-theme .product-table {
-            background-color: #fff;
+            background-color: #a5a0a0;
             border-radius: 10px;
             padding: 20px;
             color: #000000;
@@ -114,18 +121,49 @@
         /* Common Styles */
         .navbar .navbar-brand img {
             max-width: 120px;
-            height: auto;
+            
         }
 
         .navbar .navbar-nav .nav-link {
-            color: inherit;
+            color: #fff;
             margin-right: 20px;
             font-weight: 500;
         }
+        .navbar .navbar-nav .nav-link.active {
+            color: #f1c40f !important; /* Seçili sayfa sarı renkte */
+        }
+
 
         .navbar .navbar-nav .nav-link:hover {
             color: #f1c40f;
         }
+        .navbar-expand-lg .container {
+            max-width: 100%;
+            padding: 0 20px;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+        }
+
+        .navbar-toggler .fa-bars {
+            color: #fff;
+            font-size: 28px;
+        }
+        .btn-add-product {
+        background-color: #eaff00;
+        color: #000000;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        margin-bottom: 15px; /* Tablodan az bir mesafe bırakır */
+        margin-top: -15px; /* Butonu yukarı kaydırır */
+}
+
 
         .btn-theme-toggle {
             background-color: #f1c40f;
@@ -229,7 +267,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="profil.html">Mağaza</a>
+                        <li class="nav-item"></li>
+                        <a class="nav-link" href="sayfam.html">Kullanıcı</a>
+                    </li>
+                        <a class="nav-link" href="profil.html">Mağazam</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="ürünler.html">Ürünler</a>
@@ -241,10 +282,13 @@
                         <a class="nav-link" href="siparis.html">Siparişler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="satis.html">Satılan Ürünler</a>
+                        <a class="nav-link" href="satis.html">Satış Yönetimi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ayarlar.html">Ayarlar</a>
+                        <a class="nav-link " href="efatura.html">E-Fatura</a>
+                    </li>
+                    <li class="nav-item"></li>
+                        <a class="nav-link" href="#" id="logout-btn">Çıkış Yap</a>
                     </li>
                 </ul>
             </div>
@@ -269,10 +313,11 @@
                     <thead>
                         <tr>
                             <th>Ürün Adı</th>
-                            <th>Stok Durumu</th>
-                            <th>Fiyat</th>
+                            <th>Ürün Kodu</th>
+                            <th>Stok Sayısı</th>
+                            <th>Birim Fiyat</th>
                             <th>Açıklama</th>
-                            <th>Depo</th>
+                            <th>Marka</th>
                             <th>Kategori</th>
                             <th>İşlemler</th>
                         </tr>
@@ -281,10 +326,11 @@
                         <!-- Sample Product Row - Replace this with server-side generated content -->
                         <tr>
                             <td>Örnek Ürün</td>
+                            <td>50URF</td>
                             <td>20 Adet</td>
                             <td>100 TL</td>
                             <td>Bu bir örnek üründür.</td>
-                            <td>Depo 1</td>
+                            <td>Samsung</td>
                             <td>Elektronik</td>
                             <td class="table-actions">
                                 <button class="btn btn-warning btn-sm" title="Düzenle">Düzenle</button>
@@ -316,27 +362,26 @@
                             <input type="text" class="form-control" id="productName" placeholder="Ürün adını girin">
                         </div>
                         <div class="form-group">
-                            <label for="productStock">Stok Durumu</label>
-                            <input type="text" class="form-control" id="productStock" placeholder="Stok durumunu girin">
+                            <label for="productStock">Stok Sayısı</label>
+                            <input type="text" class="form-control" id="productStock" placeholder="Stok sayısını girin">
                         </div>
                         <div class="form-group">
-                            <label for="productPrice">Fiyat</label>
-                            <input type="text" class="form-control" id="productPrice" placeholder="Fiyatı girin">
+                            <label for="productPrice">Birim Fiyat</label>
+                            <input type="text" class="form-control" id="productPrice" placeholder="Birim fiyatı girin">
                         </div>
                         <div class="form-group">
                             <label for="productDescription">Açıklama</label>
                             <textarea class="form-control" id="productDescription" rows="3" placeholder="Ürün açıklamasını girin"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="productWarehouse">Depo</label>
-                            <input type="text" class="form-control" id="productWarehouse" placeholder="Depo adını girin">
+                            <label for="productWarehouse">Marka</label>
+                            <input type="text" class="form-control" id="productWarehouse" placeholder="Marka adını girin">
                         </div>
                         <div class="form-group">
                             <label for="productCategory">Kategori</label>
                             <select class="form-control" id="productCategory">
                                 <option>Elektronik</option>
-                                <option>Moda</option>
-                                <option>Ev Eşyaları</option>
+                                
                                 <!-- More categories -->
                             </select>
                         </div>
@@ -353,7 +398,7 @@
 
     <!-- Footer Start -->
     <footer class="footer">
-        <p>&copy; 2024 Şirket Adı. Tüm hakları saklıdır.</p>
+        <p>© 2024 Pazarın Yeri | <a href="#">Gizlilik Politikası</a> | <a href="#">Kullanım Şartları</a></p>
     </footer>
     <!-- Footer End -->
 
@@ -368,6 +413,15 @@
             document.body.classList.toggle('light-theme');
             document.body.classList.toggle('dark-theme');
         }
+        // Logout Button Logic
+        const logoutBtn = document.getElementById('logout-btn');
+        logoutBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            const confirmLogout = confirm("Sistemden çıkmak istediğinizden emin misiniz?");
+            if (confirmLogout) {
+                window.location.href = 'index.html'; // Redirect to logout page or perform logout action
+            }
+        });
     </script>
 </body>
 </html>

@@ -2,10 +2,13 @@
 <html lang="tr">
 
 <head>
+      <!-- Favicon Ekleme -->
+      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+      <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <!-- Basic Meta Tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
     <title>Profil</title>
 
     <!-- Bootstrap CSS -->
@@ -21,14 +24,10 @@
     <style id="theme-style">
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #343a40;
+            background-color: #333;
             color: #f8f9fa;
             margin: 0;
-        }
-
-        .dark-theme {
-            background-color: #343a40;
-            color: #f8f9fa;
+            padding-bottom: 80px; /* Footer'ın altına yer bırakmak için */
         }
 
         .navbar {
@@ -47,9 +46,29 @@
             margin-right: 20px;
             font-weight: 500;
         }
+        .navbar .navbar-nav .nav-link.active {
+            color: #f1c40f !important; /* Seçili sayfa sarı renkte */
+        }
 
         .navbar .navbar-nav .nav-link:hover {
             color: #f1c40f !important;
+        }
+        .navbar-expand-lg .container {
+            max-width: 100%;
+            padding: 0 20px;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+        }
+
+        .navbar-toggler .fa-bars {
+            color: #fff;
+            font-size: 28px;
         }
 
         .profile-header {
@@ -58,10 +77,6 @@
             background-color: #000000;
             color: #fff;
             margin-bottom: 30px;
-        }
-
-        .profile-header.dark-theme {
-            background-color: #212222;
         }
 
         .profile-content {
@@ -81,6 +96,19 @@
             padding: 10px 15px;
         }
 
+        /* Sarı ve küçük buton */
+        .btn-primary {
+            background-color: #f1c40f;
+            color: #000;
+            border-radius: 0;
+            padding: 5px 10px;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            width: auto;
+            margin-top: 15px;
+        }
+
         .btn-update {
             background-color: #5d0512;
             color: #fff;
@@ -91,64 +119,54 @@
             text-transform: uppercase;
             width: 100%;
             margin-top: 15px;
+            display: none; /* Başlangıçta görünmez */
         }
 
-        .btn-update.dark-theme {
-            background-color: #180466;
-        }
-
-        .theme-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #f1c40f;
-            color: #000;
-            border: none;
-            padding: 10px 20px;
+        .store-info {
+            display: none;
+            background-color: #212529;
+            padding: 15px;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            z-index: 1000;
-        }
-        
-        .theme-toggle.dark-theme {
-            background-color: #f1c40f;
-            color: #000;
+            margin-top: 20px;
+            color: #f1c40f;
         }
 
-        .theme-toggle.light-theme {
-            background-color: #4c4c4b;
-            color: #f9f9f9;
+        .store-info h3 {
+            margin-bottom: 15px;
         }
 
-        .avatar-container {
+        .store-info p {
+            margin: 0;
+        }
+
+        .footer {
+            background-color: #000000;
+            color: #f8f9fa;
             position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
+            bottom: 0;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+            border-top: 2px solid #f1c40f;
         }
 
-        .avatar-container img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid #f1c40f;
+        .footer a {
+            color: #f8f9fa;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            color: #f1c40f;
         }
     </style>
 </head>
 
-<body class="dark-theme">
-
-    <!-- Avatar Image -->
-    <div class="avatar-container">
-        <img src="https://via.placeholder.com/100" alt="Avatar">
-    </div>
-
-    <!-- Navbar Start -->
+<body>
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="images/logoyazi.png" alt="Logo" width="250">
+            <a class="navbar-brand" href="#">
+                <img src="images/logoyazi.png" alt="Logo" width="120">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"><i class="fas fa-bars" style="color:#fff; font-size:28px;"></i></span>
@@ -156,7 +174,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="profil.html">Mağaza</a>
+                        <a class="nav-link" href="sayfam.html">Kullanıcı</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="profil.html">Mağazam</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="ürünler.html">Ürünler</a>
@@ -171,92 +192,131 @@
                         <a class="nav-link" href="satis.html">Satış Yönetimi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="ayarlar.html">Ayarlar</a>
+                        <a class="nav-link " href="efatura.html">E-Fatura</a>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logout-btn">Çıkış Yap</a>
+                    </li>  
                 </ul>
             </div>
         </div>
     </nav>
+   
     <!-- Navbar End -->
 
     <!-- Profile Header -->
     <div class="profile-header">
         <h1>Hoşgeldiniz, Kullanıcı Adı!</h1>
-        <p>Burada bilgilerinizi görüntüleyebilir ve güncelleyebilirsiniz.</p>
+        <p>Mağaza bilgilerinizi ekleyin veya güncelleyin.</p>
+        <button class="btn btn-primary" id="addStoreBtn">Mağaza Ekle</button>
     </div>
 
     <!-- Profile Content -->
-    <div class="container profile-content">
+    <div class="container profile-content" id="storeFormContainer" style="display: none;">
         <h2>Mağaza Bilgileri</h2>
-        <form>
+        <form id="storeForm">
             <div class="form-group">
-                <label for="name">Mağaza Sahibi Adı:</label>
-                <!-- Kullanıcının kaydettiği ad -->
-                <input type="text" class="form-control" id="name" value="Mevcut Adınız">
+                <label for="storeName">Mağaza Adı:</label>
+                <input type="text" class="form-control" id="storeName" placeholder="Mağaza Adı" required>
             </div>
             <div class="form-group">
-                <label for="email">E-posta Adresiniz:</label>
-                <!-- Kullanıcının kaydettiği e-posta -->
-                <input type="email" class="form-control" id="email" value="mevcut.email@adresiniz.com">
+                <label for="phone">Telefon Numarası:</label>
+                <input type="text" class="form-control" id="phone" placeholder="Telefon Numarası" required maxlength="10" pattern="\d*" title="Lütfen sadece rakam giriniz.">
             </div>
             <div class="form-group">
-                <label for="phone">Telefon Numaranız:</label>
-                <!-- Kullanıcının kaydettiği telefon numarası -->
-                <input type="tel" class="form-control" id="phone" value="0555 555 5555">
-                <div class="form-group">
-                    <label for="storeName">Mağaza Adı:</label>
-                    <!-- Kullanıcının kaydettiği mağaza adı -->
-                    <input type="text" class="form-control" id="storeName" value="Mevcut Mağaza Adınız">
-                </div>
-                <div class="form-group">
-                    <label for="storeDesc">Mağaza Açıklaması:</label>
-                    <!-- Kullanıcının kaydettiği mağaza açıklaması -->
-                    <textarea class="form-control" id="storeDesc" rows="3" placeholder="Mevcut Mağaza Açıklamanız">Mağaza açıklamanız burada görünecek.</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="storeAddress">Mağaza Adresi:</label>
-                    <!-- Kullanıcının kaydettiği mağaza adresi -->
-                    <input type="text" class="form-control" id="storeAddress" value="Mevcut Mağaza Adresiniz">
+                <label for="taxNumber">Vergi Numarası:</label>
+                <input type="text" class="form-control" id="taxNumber" placeholder="Vergi Numarası" required maxlength="10" pattern="\d*" title="Lütfen sadece rakam giriniz.">
             </div>
-            <button type="submit" class="btn btn-update">Bilgileri Güncelle</button>
+            <div class="form-group">
+                <label for="storeDesc">Mağaza Açıklaması:</label>
+                <textarea class="form-control" id="storeDesc" rows="3" placeholder="Mağaza Açıklaması" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="storeAddress">Mağaza Adresi:</label>
+                <input type="text" class="form-control" id="storeAddress" placeholder="Mağaza Adresi" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Kaydet</button>
         </form>
+    </div>
 
-    <!-- Theme Toggle Button -->
-    <button class="btn theme-toggle" id="theme-toggle">Gece/Gündüz Modu</button>
+    <!-- Store Info Display -->
+    <div class="container profile-content store-info" id="storeInfo">
+        <h3>Mağaza Bilgileri:</h3>
+        <p><strong>Mağaza Adı:</strong> <span id="displayStoreName"></span></p>
+        <p><strong>Telefon Numarası:</strong> <span id="displayPhone"></span></p>
+        <p><strong>Vergi Numarası:</strong> <span id="displayTaxNumber"></span></p>
+        <p><strong>Mağaza Açıklaması:</strong> <span id="displayStoreDesc"></span></p>
+        <p><strong>Mağaza Adresi:</strong> <span id="displayStoreAddress"></span></p>
+        <button class="btn btn-update" id="updateStoreBtn">Güncelle</button>
+    </div>
 
-    <!-- Footer Start -->
-    <footer class="footer mt-5">
-        <div class="container text-center">
-            <p>&copy; 2024 Tüm Hakları Saklıdır. Pazar Yeri</p>
-        </div>
-    </footer>
-    <!-- Footer End -->
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024 Pazarın Yeri | <a href="#">Gizlilik Politikası</a> | <a href="#">Kullanım Şartları</a></p>
+    </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Theme Toggle Script -->
+    <!-- Custom JS -->
     <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeStyle = document.getElementById('theme-style');
-        const profileHeader = document.querySelector('.profile-header');
-        const btnUpdate = document.querySelectorAll('.btn-update');
+        $(document).ready(function() {
+            // Mağaza Ekle butonuna tıklanınca formu göster
+            $('#addStoreBtn').click(function() {
+                $('#storeFormContainer').show();
+                $('#storeInfo').hide(); // Mağaza bilgilerini gizle
+                $('#addStoreBtn').hide(); // Ekle butonunu gizle
+                $('#updateStoreBtn').hide(); // Güncelle butonunu gizle
+                $('#storeForm')[0].reset(); // Formu sıfırla
+            });
 
-        // Automatically apply dark theme on page load
-        document.body.classList.add('dark-theme');
-        profileHeader.classList.add('dark-theme');
-        btnUpdate.forEach(btn => btn.classList.add('dark-theme'));
+            // Form submit işlemi
+            $('#storeForm').submit(function(e) {
+                e.preventDefault();
 
-        themeToggleBtn.addEventListener('click', function () {
-            const isDark = document.body.classList.toggle('dark-theme');
-            profileHeader.classList.toggle('dark-theme');
-            btnUpdate.forEach(btn => btn.classList.toggle('dark-theme'));
-            themeToggleBtn.classList.toggle('light-theme', !isDark);
+                // Form bilgilerini al
+                var storeName = $('#storeName').val();
+                var phone = $('#phone').val();
+                var taxNumber = $('#taxNumber').val();
+                var storeDesc = $('#storeDesc').val();
+                var storeAddress = $('#storeAddress').val();
+
+                // Bilgileri göster
+                $('#displayStoreName').text(storeName);
+                $('#displayPhone').text(phone);
+                $('#displayTaxNumber').text(taxNumber);
+                $('#displayStoreDesc').text(storeDesc);
+                $('#displayStoreAddress').text(storeAddress);
+
+                // Formu gizle ve mağaza bilgilerini göster
+                $('#storeFormContainer').hide();
+                $('#storeInfo').show();
+                $('#updateStoreBtn').show(); // Güncelle butonunu göster
+                $('#addStoreBtn').hide(); // Ekle butonunu gizle
+            });
+
+            // Güncelle butonuna tıklanınca formu göster
+            $('#updateStoreBtn').click(function() {
+                $('#storeFormContainer').show();
+                $('#storeInfo').hide();
+                $(this).hide(); // Güncelle butonunu gizle
+                $('#addStoreBtn').show(); // Ekle butonunu göster
+            });
+        });
+        // Logout Button Logic
+        const logoutBtn = document.getElementById('logout-btn');
+        logoutBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            const confirmLogout = confirm("Sistemden çıkmak istediğinizden emin misiniz?");
+            if (confirmLogout) {
+                window.location.href = 'index.html'; // Redirect to logout page or perform logout action
+            }
         });
     </script>
 </body>
 
 </html>
+
 
