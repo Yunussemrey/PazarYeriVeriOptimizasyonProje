@@ -77,6 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     // Update Parent Category with Self-Check
+    @Transactional
     private void updateParentCategory(Category category, Integer newParentCategoryId) {
         // Ensure a category cannot be its own parent
         if (newParentCategoryId != null && newParentCategoryId.equals(category.getId())) {
@@ -96,7 +97,7 @@ public class CategoryServiceImpl implements CategoryService {
                 category.setParentCategory(newParentCategory);
                 newParentCategory.getSubCategories().add(category);
             } else {
-                category.setParentCategory(null);
+                throw new CategoryNotFoundException("Category with ID " + newParentCategoryId + " does not exist.");
             }
         } else {
             category.setParentCategory(null); // No parent

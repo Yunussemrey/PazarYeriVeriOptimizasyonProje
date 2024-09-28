@@ -32,15 +32,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getCurrentUser() {
         Integer currentUserId = SecurityUtil.getCurrentUserId();
-        return userRepository.findById(currentUserId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        return getUserFromId(currentUserId);
     }
 
     // Retrieve a user by ID
     @Override
     public UserResponseDTO getUserById(Integer userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User with ID: " + userId + " not found."));
+        User user = getUserFromId(userId);
         return userMapper.toResponseDTO(user);
     }
 
@@ -55,8 +53,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserResponseDTO updateUser(Integer userId, UserUpdateRequestDTO requestDTO) {
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        User existingUser = getUserFromId(userId);
 
         // Ensure that only the logged-in user is updating themselves
         User currentUser = getCurrentUser();
@@ -75,12 +72,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUser(Integer userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new UserNotFoundException("User not found");
+        User userDelete = getUserFromId(userId);
+
+        // SUPER_ADMIN can not be deleted
+        if (userDelete.getRole() == Role.SUPER_ADMIN) {
+            throw new UnauthorizedAccessException("This user can not be deleted.");
         }
 
-        // Ensure that the logged-in user is either deleting themselves or is an admin
         User currentUser = getCurrentUser();
+        // Ensure that the logged-in user is either deleting themselves or is an admin
         if (!currentUser.getId().equals(userId) && currentUser.getRole() != Role.ADMIN) {
             throw new UnauthorizedAccessException("You do not have permission to delete this user.");
         }
@@ -92,8 +92,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void updateUserRole(Integer userId, Role newRole) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found."));
+        User user = getUserFromId(userId);
 
         Role oldRole = user.getRole();
         User currentUser = getCurrentUser();
@@ -101,11 +100,15 @@ public class UserServiceImpl implements UserService {
 
         // Super admins cannot change their roles
         if (newRole == Role.SUPER_ADMIN ||oldRole == Role.SUPER_ADMIN) {
-            throw new UnauthorizedAccessException("Cannot assign this role to anyone.");
+            throw new UnauthorizedAccessException("SUPER_ADMIN role can not given or taken.");
         }
         // Handle Admin related role changes
         if ((newRole == Role.ADMIN || oldRole == Role.ADMIN) && currentUserRole == Role.SUPER_ADMIN) {
             handleAdminRoleChange(currentUserRole, oldRole, newRole);
+        }
+        // Delete store before changing roles
+        if (oldRole == Role.STORE_OWNER && user.getStore() != null) {
+            throw new UnauthorizedAccessException("Store owners must delete their own store to be removed from this role.");
         }
         // If all conditions are passed, update the role
         user.setRole(newRole);
@@ -113,6 +116,10 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    private User getUserFromId(Integer userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found."));
+    }
 
     private void handleAdminRoleChange(Role currentUserRole,Role oldRole, Role newRole) {
         // Ensure only SUPER_ADMIN can assign or remove admin roles

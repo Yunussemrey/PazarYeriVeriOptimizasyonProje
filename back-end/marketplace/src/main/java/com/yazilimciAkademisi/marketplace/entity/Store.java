@@ -31,7 +31,7 @@ public class Store {
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 
-    @OneToOne  // One-to-one relationship with User
+    @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 

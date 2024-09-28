@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.security.authentication.BadCredentialsException;
 
 import javax.naming.AuthenticationException;
 import java.security.SignatureException;
@@ -50,8 +51,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
     }
 
-    // TODO:JWT-specific exceptions. You need to edit codes for handling this error, for know do not use
-    /*
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<String> handleExpiredJwtException(ExpiredJwtException ex) {
         return new ResponseEntity<>("Token has expired", HttpStatus.UNAUTHORIZED);
@@ -71,7 +70,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleAuthenticationException(AuthenticationException ex) {
         return new ResponseEntity<>("Authentication failed: " + ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
-    */
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<String> handleBadCredentialsException(BadCredentialsException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
     // Handle global exceptions
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGlobalException(Exception ex, WebRequest request) {

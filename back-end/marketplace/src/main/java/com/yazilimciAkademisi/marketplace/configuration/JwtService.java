@@ -3,6 +3,7 @@ package com.yazilimciAkademisi.marketplace.configuration;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -58,12 +59,22 @@ public class JwtService {
     }
 
     public Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts
+                    .parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredJwtException(null, null, "Token has expired");
+        } catch (SignatureException e) {
+            throw new SignatureException("Invalid JWT signature");
+        } catch (MalformedJwtException e) {
+            throw new MalformedJwtException("Invalid JWT token");
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Token is empty");
+        }
     }
 
     private Key getSignInKey() {
