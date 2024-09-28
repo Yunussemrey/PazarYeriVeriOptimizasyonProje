@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponseDTO createProduct(ProductRequestDTO requestDTO) {
         Integer userId = SecurityUtil.getCurrentUserId();
-        Store store = storeRepository.findById(requestDTO.getStoreId())
+        Store store = storeRepository.findByUserId(userId)
                 .orElseThrow(() -> new StoreNotFoundException("Store not found"));
 
         OwnershipUtil.checkStoreOwnership(store, userId);
