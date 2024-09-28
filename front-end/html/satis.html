@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+      <!-- Favicon Ekleme -->
+      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+      <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <!-- Basic Meta Tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,8 +47,26 @@
             font-weight: 500;
         }
 
+        .navbar .navbar-nav .nav-link.active {
+            color: #f1c40f !important; /* Seçili sayfa sarı renkte */
+        }
+
         .navbar .navbar-nav .nav-link:hover {
             color: #f1c40f !important;
+        }
+
+        .navbar-expand-lg .container {
+            max-width: 100%;
+            padding: 0 20px;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler .fa-bars {
+            color: #fff;
+            font-size: 28px;
         }
 
         .content-container {
@@ -104,22 +125,22 @@
         }
 
         .light-theme .navbar {
-            background-color: #f1f1f1;
+            background-color: #000000;
         }
 
         .light-theme .navbar .nav-link {
-            color: #000 !important;
+            color: #ffffff !important;
         }
 
         .light-theme .table-dark {
-            background-color: #fff;
-            border-color: #ccc;
+            background-color: #a2a1a1;
+            border-color: #747474;
             color: #000;
         }
 
         .light-theme .footer {
-            background-color: #f1f1f1;
-            color: #000;
+            background-color: #000000;
+            color: #ffffff;
         }
 
         .light-theme .theme-toggle-btn {
@@ -146,7 +167,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="profil.html">Profil</a>
+                        <a class="nav-link" href="sayfam.html">Kullanıcı</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profil.html">Mağazam</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="ürünler.html">Ürünler</a>
@@ -158,10 +182,13 @@
                         <a class="nav-link" href="siparis.html">Siparişler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="satis.html">Satış Yönetimi</a>
+                        <a class="nav-link active" href="satis.html">Satış Yönetimi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="ayarlar.html">Ayarlar</a>
+                        <a class="nav-link " href="efatura.html">E-Fatura</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logout-btn">Çıkış Yap</a>
                     </li>
                 </ul>
             </div>
@@ -179,24 +206,27 @@
                         <th>Ürün Adı</th>
                         <th>Kategori</th>
                         <th>Satış Adedi</th>
-                        <th>Fiyat</th>
+                        <th>Birim Fiyatı</th>
                         <th>KDV Oranı</th>
+                        <th>Genel Toplam</th>
                         <th>Kar/Zarar Durumu</th>
                         <th>İade Oranı</th>
+                        <th>Pazar Yeri</th>
                         <th>Satış Trendi</th>
                         <th>Kampanya Önerisi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Örnek Veriler -->
                     <tr>
                         <td>Ürün 1</td>
                         <td>Kategori A</td>
                         <td>50</td>
                         <td>200 TL</td>
                         <td>%18</td>
+                        <td>11.800 TL</td>
                         <td class="text-success">Kar</td>
                         <td>%5</td>
+                        <td>Trendyol</td>
                         <td>En çok satılan zaman: Ağustos 2024</td>
                         <td><button class="btn btn-primary btn-sm">Kampanya Oluştur</button></td>
                     </tr>
@@ -206,12 +236,13 @@
                         <td>20</td>
                         <td>150 TL</td>
                         <td>%18</td>
+                        <td>3540.0 TL</td>
                         <td class="text-danger">Zarar</td>
                         <td>%12</td>
+                        <td>Trendyol</td>
                         <td>En az satılan zaman: Temmuz 2024</td>
                         <td><button class="btn btn-primary btn-sm">Kampanya Oluştur</button></td>
                     </tr>
-                    <!-- Daha fazla veri buraya eklenebilir -->
                 </tbody>
             </table>
         </div>
@@ -221,7 +252,7 @@
     <!-- Footer Start -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Tüm Hakları Saklıdır. Satış Yönetimi</p>
+            <p>© 2024 Pazarın Yeri | <a href="#">Gizlilik Politikası</a> | <a href="#">Kullanım Şartları</a></p>
         </div>
     </footer>
     <!-- Footer End -->
@@ -236,9 +267,26 @@
 
     <!-- Dark/Light Theme Toggle Script -->
     <script>
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
+        // Store current theme in localStorage
+        const currentTheme = localStorage.getItem("theme") || "dark";
+        if (currentTheme === "light") {
+            document.body.classList.add("light-theme");
         }
+
+        function toggleTheme() {
+            document.body.classList.toggle("light-theme");
+            const theme = document.body.classList.contains("light-theme") ? "light" : "dark";
+            localStorage.setItem("theme", theme);
+        }
+        // Logout Button Logic
+        const logoutBtn = document.getElementById('logout-btn');
+        logoutBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            const confirmLogout = confirm("Sistemden çıkmak istediğinizden emin misiniz?");
+            if (confirmLogout) {
+                window.location.href = 'index.html'; // Redirect to logout page or perform logout action
+            }
+        });
     </script>
 
 </body>

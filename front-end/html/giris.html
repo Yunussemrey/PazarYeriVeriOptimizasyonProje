@@ -2,6 +2,9 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+     <!-- Favicon Ekleme -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <!-- Basic Meta Tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,6 +57,10 @@
             margin-right: 20px; /* Increased spacing */
             font-weight: 500;
         }
+        .navbar .navbar-nav .nav-link.active {
+            color: #f1c40f !important; /* Seçili sayfa sarı renkte */
+        }
+
 
         .navbar .navbar-nav .nav-link:hover {
             color: #f1c40f !important;
@@ -203,9 +210,6 @@
                         <a class="nav-link" href="hakkimizda.html">Hakkımızda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="kategori.html">Kategoriler</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link active" href="giris.html">Giriş Yap</a>
                     </li>
                     <li class="nav-item">
@@ -217,7 +221,7 @@
     </nav>
     <!-- Navbar End -->
 
-    <!-- Login Section Start -->
+     <!-- Login Section Start -->
     <section class="login-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -236,12 +240,26 @@
                             <button type="submit" class="btn btn-login btn-block">Giriş Yap</button>
                         </form>
                         <p class="text-center mt-3">Henüz bir hesabınız yok mu? <a href="kayit.html">Kayıt Olun</a></p>
+                        <p id="errorMessage" style="color: red; text-align: center; display: none;">Bilgileriniz yanlış. Lütfen tekrar deneyin.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- Login Section End -->
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <i class="fas fa-check-circle"></i>
+                    <h5>Başarıyla Giriş Yapıldı!</h5>
+                    <p>Giriş işleminiz başarıyla tamamlandı. Yönlendiriliyorsunuz...</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer Start -->
     <footer class="footer">
@@ -251,7 +269,7 @@
                 <a href="#"><i class="fab fa-twitter"></i></a>
                 <a href="#"><i class="fab fa-instagram"></i></a>
             </div>
-            <p class="mt-3">&copy; 2024 Tüm Hakları Saklıdır. Pazar Yeri</p>
+            <p class="mt-3">&copy; 2024 Tüm Hakları Saklıdır. Pazarın Yeri</p>
         </div>
     </footer>
     <!-- Footer End -->
@@ -273,6 +291,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 
 </body>
 </html>
