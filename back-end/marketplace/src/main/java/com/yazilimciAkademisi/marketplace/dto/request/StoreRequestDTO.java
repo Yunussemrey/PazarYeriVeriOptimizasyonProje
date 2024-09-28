@@ -5,7 +5,6 @@ public class StoreRequestDTO {
     private String description;
     private String phone;
     private String address;
-    private Integer userId;
 
     public String getName() {
         return name;
@@ -37,13 +36,5 @@ public class StoreRequestDTO {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 }

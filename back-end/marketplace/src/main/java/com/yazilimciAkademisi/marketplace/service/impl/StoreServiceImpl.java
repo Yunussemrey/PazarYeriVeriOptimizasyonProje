@@ -1,5 +1,6 @@
 package com.yazilimciAkademisi.marketplace.service.impl;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.yazilimciAkademisi.marketplace.dto.mapper.StoreMapper;
 import com.yazilimciAkademisi.marketplace.dto.request.StoreRequestDTO;
 import com.yazilimciAkademisi.marketplace.dto.response.StoreResponseDTO;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -66,6 +68,7 @@ public class StoreServiceImpl implements StoreService {
         existingStore.setDescription(requestDTO.getDescription());
         existingStore.setPhone(requestDTO.getPhone());
         existingStore.setAddress(requestDTO.getAddress());
+        existingStore.setUpdatedAt(LocalDateTime.now());
         Store updatedStore = storeRepository.save(existingStore);
         return storeMapper.toResponseDTO(updatedStore);
     }
@@ -83,10 +86,10 @@ public class StoreServiceImpl implements StoreService {
             throw new UnauthorizedAccessException("You do not have permission to delete this store.");
         }
         storeRepository.deleteById(storeId);
-        // If the store owner no longer owns any store, revert their role back to USER
-        if (storeOwner != null && storeOwner.getStore() == null) {
-            userService.updateUserRole(storeOwner.getId(), Role.USER);
-        }
+
+        // Remove the store from the user
+        storeOwner.setStore(null);
+        userService.updateUserRole(storeOwner.getId(), Role.USER);
     }
 
     // Store Owner/Admin: Get store by ID

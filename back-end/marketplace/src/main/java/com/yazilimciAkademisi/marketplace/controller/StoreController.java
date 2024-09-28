@@ -21,7 +21,7 @@ public class StoreController {
     }
 
     // Store Owner: Create a new store (each user can only have one store)
-    @PreAuthorize("hasAuthority('STORE_OWNER')")
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping
     public ResponseEntity<StoreResponseDTO> createStore(@RequestBody StoreRequestDTO requestDTO) {
         StoreResponseDTO createdStore = storeService.createStore(requestDTO);
