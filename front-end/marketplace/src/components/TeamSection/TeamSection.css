@@ -1,0 +1,78 @@
+.team_section {
+  padding: 60px 0;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.team_title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.team_text {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.team_member {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.team_member img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  object-position: center;
+  border: 3px solid #343a40;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.team_member_name {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.team_member_role {
+  font-size: 16px;
+  color: #888;
+}
+
+.team_section .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.team_section .col-lg-4,
+.team_section .col-sm-6 {
+  flex: 0 0 33.3333%; /* Make sure each team member takes up 1/3 of the row on larger screens */
+  max-width: 33.3333%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive layout for small screens */
+@media (max-width: 768px) {
+  .team_section .col-sm-6 {
+    flex: 0 0 50%; /* Two team members per row on smaller screens */
+    max-width: 50%;
+  }
+
+  .team_member img {
+    width: 120px; /* Adjust image size on smaller screens */
+    height: 120px;
+  }
+}
+
+@media (max-width: 576px) {
+  .team_section .col-sm-6 {
+    flex: 0 0 100%; /* One team member per row on the smallest screens */
+    max-width: 100%;
+  }
+}

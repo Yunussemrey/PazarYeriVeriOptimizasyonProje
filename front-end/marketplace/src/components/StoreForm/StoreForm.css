@@ -1,0 +1,36 @@
+/* Store Form Styles */
+.store-profile {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.store-form-group {
+  margin-bottom: 15px;
+}
+
+.store-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.store-form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.store-form-control:focus {
+  border-color: #f1c40f;
+  outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .store-profile {
+    padding: 15px;
+  }
+}

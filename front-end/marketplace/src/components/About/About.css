@@ -1,0 +1,79 @@
+/* src/components/About/About.css */
+.about-section {
+  padding: 60px 20px;
+  background-color: #f8f9fa;
+}
+
+.about-container {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.about-section h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.about-section p {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.about-section img {
+  margin: 0 auto;
+  max-width: 200px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-section img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .about-section h2 {
+    font-size: 28px; /* Reduce heading size */
+  }
+
+  .about-section p {
+    font-size: 16px; /* Reduce paragraph font size */
+  }
+
+  .about-section img {
+    max-width: 150px; /* Scale down the image */
+  }
+}
+
+@media (max-width: 576px) {
+  .about-container {
+    padding: 10px; /* More compact padding for mobile */
+  }
+
+  .about-section {
+    padding: 40px 10px; /* Reduce padding for smaller screens */
+  }
+
+  .about-section h2 {
+    font-size: 24px;
+  }
+
+  .about-section p {
+    font-size: 14px;
+  }
+
+  .about-section img {
+    max-width: 120px;
+  }
+}

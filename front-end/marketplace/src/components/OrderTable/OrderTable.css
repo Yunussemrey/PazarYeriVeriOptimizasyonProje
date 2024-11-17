@@ -1,0 +1,60 @@
+/* src/components/OrderTable/OrderTable.css */
+
+/* Table Responsive Wrapper */
+.orderManagement-table-responsive {
+  overflow-x: auto;
+}
+
+/* Table Styles */
+.orderManagement-table {
+  width: 100%;
+  color: #fff;
+  background-color: #555;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.orderManagement-table th,
+.orderManagement-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.orderManagement-table thead th {
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #3d3d3d;
+}
+
+.orderManagement-table tbody tr:hover {
+  background-color: #444;
+}
+
+/* Button Styles */
+.orderManagement-btn {
+  padding: 5px 15px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  color: #ffffff;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+}
+
+.orderManagement-btn-danger {
+  background-color: #dc3545;
+}
+
+.orderManagement-btn-warning {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.orderManagement-btn-danger:hover {
+  background-color: #c82333;
+}
+
+.orderManagement-btn-warning:hover {
+  background-color: #e0a800;
+}

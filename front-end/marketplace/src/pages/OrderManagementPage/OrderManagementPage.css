@@ -1,0 +1,7 @@
+/* src/pages/OrderManagementPage/OrderManagementPage.css */
+
+.orderManagement-content-container {
+  padding: 100px 20px;
+  background-color: #333;
+  flex-grow: 1;
+}

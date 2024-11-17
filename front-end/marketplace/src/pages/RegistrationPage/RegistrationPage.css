@@ -1,0 +1,64 @@
+/* src/pages/RegistrationPage/RegistrationPage.css */
+.registration-section {
+  display: flex;
+  background-color: #4c4c4c;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.registration-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  text-align: center;
+}
+
+.registration-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  color: #333;
+}
+
+.registration-card h2 {
+  margin-top: 5px;
+  margin-bottom: 30px;
+  font-weight: 600;
+  font-size: 2rem;
+  color: #333;
+}
+
+.btn-register {
+  background-color: #f1c40f;
+  color: #333;
+  border: none;
+  border-radius: 30px;
+  padding: 0.75rem 0;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s;
+}
+
+.btn-register:hover {
+  background-color: #d4ac0d;
+  color: #fff;
+}
+
+.login-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
