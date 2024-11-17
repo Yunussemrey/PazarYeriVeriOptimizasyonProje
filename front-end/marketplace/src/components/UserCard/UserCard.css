@@ -1,0 +1,69 @@
+/* General styles for the user card */
+.user-card {
+  background-color: #444; /* Dark background color for the card */
+  padding: 20px; /* Padding inside the card */
+  border-radius: 20px; /* Rounded corners for the card */
+  margin-bottom: 30px; /* Space between cards */
+  transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+  min-height: 250px; /* Ensure a minimum height */
+  min-width: 300px; /* Ensure a minimum width */
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Arrange elements vertically */
+  justify-content: space-between; /* Distribute space evenly */
+  color: #fff; /* White text color */
+}
+
+.user-card:hover {
+  transform: translateY(-5px); /* Slight hover effect to lift the card */
+}
+
+.user-card-name {
+  font-weight: 600; /* Bold title */
+  color: #f1c40f; /* Yellow title color */
+  text-align: center;
+}
+
+.user-card-info {
+  margin: 5px 0; /* Spacing between info elements */
+  display: flex; /* Flexbox layout for labels and values */
+  justify-content: space-between; /* Align content between */
+}
+
+/* Styles for the action buttons (Make Admin, Remove Admin, Delete) */
+.user-actions {
+  display: flex; /* Flexbox layout */
+  justify-content: space-between; /* Align buttons horizontally */
+  margin: 20px 0;
+}
+
+.user-card-btn {
+  color: white; /* White text color */
+  border: none; /* No border */
+  margin-right: 5px; /* Space between buttons */
+  padding: 10px; /* Padding inside the button */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.user-card-btn-admin {
+  background-color: #2980b9; /* Blue button for making admin */
+}
+
+.user-card-btn-admin:hover {
+  background-color: #1b4f72; /* Darker blue on hover */
+}
+
+.user-card-btn-remove-admin {
+  background-color: #e74c3c; /* Red button for removing admin */
+}
+
+.user-card-btn-remove-admin:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.user-card-btn-delete {
+  background-color: #d35400; /* Orange button for deleting user */
+}
+
+.user-card-btn-delete:hover {
+  background-color: #a04000; /* Darker orange on hover */
+}

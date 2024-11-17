@@ -1,0 +1,33 @@
+/* src/components/Slider/Slider.css */
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  margin-top: 74px;
+}
+
+.slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Responsive slider adjustments */
+@media (max-width: 768px) {
+  .slider {
+    height: 50vh;
+  }
+
+  .slider img {
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 576px) {
+  .slider {
+    height: 40vh;
+  }
+}

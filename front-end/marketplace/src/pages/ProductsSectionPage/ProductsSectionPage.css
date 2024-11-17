@@ -1,0 +1,50 @@
+/* ProductsSectionPage Styles */
+
+/* Product Section */
+.product-section {
+  flex-grow: 1;
+  padding: 80px 20px;
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.product-container {
+  max-width: 1500px;
+  margin: 0px auto;
+}
+
+.product-title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+  font-weight: 600;
+}
+
+.product-btn-add {
+  display: block;
+  margin-bottom: 20px;
+  background-color: #f1c40f;
+  color: #333;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.product-btn-add:hover {
+  background-color: #d4ac0d;
+  color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .product-title {
+    font-size: 28px;
+  }
+
+  .product-btn-add {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}

@@ -1,0 +1,56 @@
+/* InvoiceSearchForm Styles */
+
+.invoice-search-section {
+  padding: 20px;
+  background-color: #444;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.invoice-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.invoice-form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.invoice-form-group-button {
+  display: flex;
+  align-items: flex-end;
+}
+
+.invoice-form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+.invoice-form-input,
+.invoice-form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #444;
+  color: #fff;
+  box-sizing: border-box; /* Ensure padding doesn't overflow */
+}
+
+.invoice-btn-primary {
+  background-color: #f1c40f;
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.invoice-btn-primary:hover {
+  background-color: #d4ac0d;
+  color: #fff;
+}

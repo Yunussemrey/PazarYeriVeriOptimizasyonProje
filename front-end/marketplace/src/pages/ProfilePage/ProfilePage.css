@@ -1,0 +1,109 @@
+/* src/pages/ProfilePage/ProfilePage.css */
+
+/* Profile Header */
+.profile-page-header {
+  text-align: center;
+  padding: 60px 20px 20px; /* Adjusted padding */
+  background-color: #333;
+  color: #fff;
+}
+
+.profile-page-header h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.profile-page-header p {
+  font-size: 18px;
+  color: #ccc;
+}
+
+.profile-page-content {
+  display: flex;
+  flex-direction: column; /* Arrange children vertically */
+  align-items: center; /* Center children horizontally */
+  flex-grow: 1; /* Allow it to grow and fill available space */
+  padding: 40px 20px;
+  background-color: #1a1a1a;
+}
+.profile-page-form {
+  max-width: 600px;
+  width: 100%;
+  background-color: #212121;
+  padding: 30px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  flex: 0; /* Do not grow or shrink */
+  align-self: center; /* Center horizontally */
+}
+
+.profile-page-form-group {
+  margin-bottom: 20px;
+}
+
+.profile-page-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #f1c40f;
+  font-weight: bold;
+}
+
+.profile-page-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #2a2a2a;
+  color: #fff;
+  font-size: 16px;
+  box-sizing: border-box; /* Added box-sizing */
+}
+
+.profile-page-input:focus {
+  outline: none;
+  border-color: #f1c40f;
+}
+
+/* Button Group */
+.profile-page-button-group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 0; /* Remove any extra margin */
+}
+
+.profile-page-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.profile-page-btn-update {
+  background-color: #f1c40f;
+  color: #333;
+}
+
+.profile-page-btn-update:hover {
+  background-color: #d4ac0d;
+  color: #fff;
+}
+
+.profile-page-btn-delete {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.profile-page-btn-delete:hover {
+  background-color: #c82333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-page-button-group {
+    flex-direction: column;
+  }
+}
